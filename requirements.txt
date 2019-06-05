@@ -1,0 +1,4 @@
+pygame
+gql_py
+pyinstaller
+pygame-menu

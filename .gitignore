@@ -1,3 +1,10 @@
+# VSCode settings
+settings.json
+
+# Super secret secrets
+secrets.env
+secrets.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -102,3 +109,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.vscode/settings.json
