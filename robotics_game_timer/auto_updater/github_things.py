@@ -1,3 +1,4 @@
+import os
 from gql_py import Gql
 
 gql = Gql(api='https://api.github.com/graphql')
@@ -28,3 +29,6 @@ query {
 			return (True, response.data['repository']['releases']['nodes'][0]['tagName'])
 		else:
 			return (False, None)
+
+	def get_resource_from_latest_release(self, resource_name, target_path):
+		return "Not Implemented"
