@@ -1,0 +1,6 @@
+{
+	"current_installed_version": "0.0.0",
+	"active_plugins": [
+		"plugins.test_plugin"
+	]
+}
