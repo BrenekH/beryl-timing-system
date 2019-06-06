@@ -32,21 +32,32 @@ class Timer:
     def start(self):
         self._period_start_time = int(time.time())
         self.timer_running = True
+        self._loops = len(self.timing_periods)
 
     def stop(self):
         self.timer_running = False
+
+        self._period_start_time = None
+        self._seconds_left = None
+        self._loops = None
+        self._current_period_index = None
 
     def get_status(self):
         # Return background and foreground colors, and text to display
         seconds_elapsed = int(time.time()) - self._period_start_time
         if seconds_elapsed >= self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"]:
             # Progress to the next period or end the timer
-            pass
-        self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"] - seconds_elapsed
-        return (
-            str(self._seconds_left),
-            self.timing_periods_details[self.timing_periods[self._current_period_index]]["background_color"],
-            self.timing_periods_details[self.timing_periods[self._current_period_index]]["foreground_color"])
+            if self._current_period_index + 1 == self._loops:
+                pass
+        
+        if self.timer_running:
+            self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"] - seconds_elapsed
+            return (
+                str(self._seconds_left),
+                self.timing_periods_details[self.timing_periods[self._current_period_index]]["background_color"],
+                self.timing_periods_details[self.timing_periods[self._current_period_index]]["foreground_color"])
+        else:
+            return (self.idle_period_details["text"], self.idle_period_details["background_color"], self.idle_period_details["foreground_color"])
 
     def load_settings(self):
         # Load the timing periods from the config
@@ -75,6 +86,6 @@ class Timer:
         self.idle_period_details = {
             "text": "OFF",
             "background_color": (0, 255, 0),
-            "foreground_color": ()
+            "foreground_color": (0, 0, 0)
         }
         return self

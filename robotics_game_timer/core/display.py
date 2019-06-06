@@ -30,7 +30,10 @@ class CoreDisplay:
 					self.running = False
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_SPACE:
-						self.timer.start()
+						if self.timer.timer_running:
+							self.timer.stop()
+						else:
+							self.timer.start()
 
 			if self.timer.timer_running:
 				print(self.timer.get_status())
