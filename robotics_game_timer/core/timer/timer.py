@@ -20,42 +20,55 @@ class Timer:
         self.timing_periods_details = {}
         self.idle_period_details = {}
         self.early_stop_sound = None
+        self.stop_sound = None
 
-        self.__start_time = None
-        self.__seconds_left = None
-        self.__loops = None
+        self.timer_running = False
+
+        self._period_start_time = None
+        self._seconds_left = None
+        self._loops = None
+        self._current_period_index = None
 
     def start(self):
-        self.__start_time = time.time()
+        self._period_start_time = int(time.time())
+        self.timer_running = True
 
     def stop(self):
-        pass
+        self.timer_running = False
 
     def get_status(self):
         # Return background and foreground colors, and text to display
-        pass
+        seconds_elapsed = int(time.time()) - self._period_start_time
+        if seconds_elapsed >= self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"]:
+            # Progress to the next period or end the timer
+            pass
+        self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"] - seconds_elapsed
+        return (
+            str(self._seconds_left),
+            self.timing_periods_details[self.timing_periods[self._current_period_index]]["background_color"],
+            self.timing_periods_details[self.timing_periods[self._current_period_index]]["foreground_color"])
 
     def load_settings(self):
         # Load the timing periods from the config
         # TODO: Actually load from a config file
-        self.timing_periods = ["Autonomous", "Teleop", "End"]
+        self.timing_periods = ["AUTONOMOUS", "TELEOP", "END GAME"]
         self.timing_periods_details = {
-            "Autonomous": {
+            "AUTONOMOUS": {
                 "time": 30,
                 "start_sound": "",
-                "background_color": (0, 0, 0),
+                "background_color": (255, 0, 0),
                 "foreground_color": (0, 0, 0)
             },
-            "Teleop": {
+            "TELEOP": {
                 "time": 120,
                 "start_sound": "",
-                "background_color": (0, 0, 0),
+                "background_color": (255, 0, 0),
                 "foreground_color": (0, 0, 0)
             },
-            "End": {
+            "END GAME": {
                 "time": 30,
                 "start_sound": "",
-                "background_color": (0, 0, 0),
+                "background_color": (255, 255, 0),
                 "foreground_color": (0, 0, 0)
             }
         }

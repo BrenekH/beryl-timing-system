@@ -28,6 +28,12 @@ class CoreDisplay:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					self.running = False
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_SPACE:
+						self.timer.start()
+
+			if self.timer.timer_running:
+				print(self.timer.get_status())
 
 			pygame.display.update()
 		pygame.quit()
