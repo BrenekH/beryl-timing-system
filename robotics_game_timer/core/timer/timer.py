@@ -4,6 +4,8 @@ import time
 # timing_periods_details = {
 #   "auto": {
 #       "time": int("seconds"),
+#       "start_time": int("seconds"),
+#       "end_time": int("seconds"),
 #       "start_sound": "path_to_file", 
 #       "background_color": (r, g, b), 
 #       "foreground_color": (r, g, b)}}
@@ -62,7 +64,7 @@ class Timer:
                 self._period_start_time = int(time.time())
 
         if self.timer_running:
-            self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"] - seconds_elapsed
+            self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_time"] - seconds_elapsed
             return (
                 self.timing_periods[self._current_period_index],
                 str(self._seconds_left),
@@ -78,18 +80,24 @@ class Timer:
         self.timing_periods_details = {
             "AUTONOMOUS": {
                 "time": 30,
+                "start_time": 30,
+                "end_time": 0,
                 "start_sound": "",
                 "background_color": (255, 0, 0),
                 "foreground_color": (0, 0, 0)
             },
             "TELEOP": {
                 "time": 120,
+                "start_time": 150,
+                "end_time": 30,
                 "start_sound": "",
                 "background_color": (255, 0, 0),
                 "foreground_color": (0, 0, 0)
             },
             "END GAME": {
                 "time": 30,
+                "start_time": 30,
+                "end_time": 0,
                 "start_sound": "",
                 "background_color": (255, 255, 0),
                 "foreground_color": (0, 0, 0)
