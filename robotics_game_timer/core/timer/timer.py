@@ -54,16 +54,16 @@ class Timer:
 
     def get_status(self):
         # Return background and foreground colors, and text to display
-        seconds_elapsed = int(time.time()) - self._period_start_time
-        if seconds_elapsed >= self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"]:
-            # Progress to the next period or end the timer
-            if self._current_period_index + 1 == self._loops:
-                self.stop(early=False)
-            else:
-                self._current_period_index += 1
-                self._period_start_time = int(time.time())
-
         if self.timer_running:
+            seconds_elapsed = int(time.time()) - self._period_start_time
+            if seconds_elapsed >= self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"]:
+                # Progress to the next period or end the timer
+                if self._current_period_index + 1 == self._loops:
+                    self.stop(early=False)
+                else:
+                    self._current_period_index += 1
+                    self._period_start_time = int(time.time())
+                    
             self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_time"] - seconds_elapsed
             return (
                 self.timing_periods[self._current_period_index],
