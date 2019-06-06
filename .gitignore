@@ -1,3 +1,6 @@
+# VSCode settings
+settings.json
+
 # Super secret secrets
 secrets.env
 secrets.py
@@ -106,3 +109,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.vscode/settings.json
