@@ -5,6 +5,7 @@ from .timer import Timer
 class CoreDisplay:
 	def __init__(self):
 		self.running = False
+		self.do_game_display = False
 
 		self.display = None
 		self.clock = None
@@ -19,6 +20,8 @@ class CoreDisplay:
 		self.clock = pygame.time.Clock()
 
 		self.timer = Timer().load_settings()
+
+		# TODO: Load plugins and switch do_game_display accordingly
 
 		self.running = True
 		self.__run__()
