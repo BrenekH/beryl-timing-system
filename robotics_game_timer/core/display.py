@@ -1,5 +1,6 @@
 import pygame
 from .colors import Color
+from .timer import Timer
 
 class CoreDisplay:
 	def __init__(self):
@@ -10,9 +11,13 @@ class CoreDisplay:
 		
 		self.width, self.height = (1000, 1000)
 
+		self.timer = None
+
 	def start(self):
 		self.display = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
 		self.clock = pygame.time.Clock()
+
+		self.timer = Timer().load_settings()
 
 		self.running = True
 		self.__run__()
