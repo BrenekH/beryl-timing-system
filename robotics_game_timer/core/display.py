@@ -6,6 +6,7 @@ class CoreDisplay:
 	def __init__(self):
 		self.running = False
 		self.do_game_display = False
+		self.toggle_timer = False
 
 		self.display = None
 		self.clock = None
@@ -34,16 +35,28 @@ class CoreDisplay:
 					self.running = False
 				elif event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_SPACE:
-						if self.timer.timer_running:
-							self.timer.stop()
-						else:
-							self.timer.start()
+						self.toggle_timer = True
 				elif event.type == pygame.VIDEORESIZE:
 					self.height = event.h
 					self.width = event.w
 					self.display = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
 
-			self.message_to_screen(str(self.timer.get_status()), Color.black.value, 50, self.width/2, 25)
+			if self.toggle_timer:
+				if self.timer.timer_running:
+					self.timer.stop()
+				else:
+					self.timer.start()
+				self.toggle_timer = False
+
+			# TODO: Actually implement a game display surface
+			timer_status = self.timer.get_status()
+			if self.do_game_display:
+				pass
+			else:
+				self.display.fill(timer_status[2])
+				# self.message_to_screen(str(timer_status), timer_status[3], 50, self.width/2, 25)
+				self.message_to_screen(str(timer_status[0]), timer_status[3], 50, self.width/2, (self.height/6) * 2) # Game Mode
+				self.message_to_screen(str(timer_status[1]), timer_status[3], 50, self.width/2, (self.height/6) * 3) # Time Left
 
 			pygame.display.update()
 		pygame.quit()
