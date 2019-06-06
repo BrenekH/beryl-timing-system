@@ -33,6 +33,7 @@ class Timer:
         self._period_start_time = int(time.time())
         self.timer_running = True
         self._loops = len(self.timing_periods)
+        self._current_period_index = 0
 
     def stop(self):
         self.timer_running = False
@@ -48,8 +49,11 @@ class Timer:
         if seconds_elapsed >= self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"]:
             # Progress to the next period or end the timer
             if self._current_period_index + 1 == self._loops:
-                pass
-        
+                print("End of timing")
+            else:
+                self._current_period_index += 1
+                self._period_start_time = int(time.time())
+
         if self.timer_running:
             self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"] - seconds_elapsed
             return (
@@ -88,4 +92,5 @@ class Timer:
             "background_color": (0, 255, 0),
             "foreground_color": (0, 0, 0)
         }
+        print("Settings loaded")
         return self
