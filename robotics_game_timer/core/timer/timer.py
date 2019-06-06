@@ -24,10 +24,10 @@ class Timer:
 
         self.timer_running = False
 
-        self._period_start_time = None
+        self._period_start_time = 0
         self._seconds_left = None
         self._loops = None
-        self._current_period_index = None
+        self._current_period_index = 0
 
     def start(self):
         self._period_start_time = int(time.time())
@@ -35,13 +35,20 @@ class Timer:
         self._loops = len(self.timing_periods)
         self._current_period_index = 0
 
-    def stop(self):
+    def stop(self, early=True):
         self.timer_running = False
 
-        self._period_start_time = None
+        self._period_start_time = 0
         self._seconds_left = None
         self._loops = None
-        self._current_period_index = None
+        self._current_period_index = 0
+
+        if early:
+            # Play the stop early sound
+            pass
+        else:
+            # Play the stop sound 
+            pass
 
     def get_status(self):
         # Return background and foreground colors, and text to display
@@ -49,7 +56,7 @@ class Timer:
         if seconds_elapsed >= self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"]:
             # Progress to the next period or end the timer
             if self._current_period_index + 1 == self._loops:
-                print("End of timing")
+                self.stop(early=False)
             else:
                 self._current_period_index += 1
                 self._period_start_time = int(time.time())
@@ -57,11 +64,12 @@ class Timer:
         if self.timer_running:
             self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"] - seconds_elapsed
             return (
+                self.timing_periods[self._current_period_index],
                 str(self._seconds_left),
                 self.timing_periods_details[self.timing_periods[self._current_period_index]]["background_color"],
                 self.timing_periods_details[self.timing_periods[self._current_period_index]]["foreground_color"])
         else:
-            return (self.idle_period_details["text"], self.idle_period_details["background_color"], self.idle_period_details["foreground_color"])
+            return (self.idle_period_details["text"], "", self.idle_period_details["background_color"], self.idle_period_details["foreground_color"])
 
     def load_settings(self):
         # Load the timing periods from the config
@@ -92,5 +100,4 @@ class Timer:
             "background_color": (0, 255, 0),
             "foreground_color": (0, 0, 0)
         }
-        print("Settings loaded")
         return self
