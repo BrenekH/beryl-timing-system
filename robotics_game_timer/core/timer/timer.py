@@ -1,4 +1,5 @@
-import time
+import time, pygame
+from pathlib import Path
 
 # timing_periods = ["auto", "teleop", "endgame"]
 # timing_periods_details = {
@@ -36,6 +37,7 @@ class Timer:
         self.timer_running = True
         self._loops = len(self.timing_periods)
         self._current_period_index = 0
+        self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_sound"].play()
 
     def stop(self, early=True):
         self.timer_running = False
@@ -47,10 +49,10 @@ class Timer:
 
         if early:
             # Play the stop early sound
-            pass
+            self.early_stop_sound.play()
         else:
             # Play the stop sound 
-            pass
+            self.stop_sound.play()
 
     def get_status(self):
         # Return background and foreground colors, and text to display
@@ -63,6 +65,7 @@ class Timer:
                 else:
                     self._current_period_index += 1
                     self._period_start_time = int(time.time())
+                    self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_sound"].play()
                     
             self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_time"] - seconds_elapsed
             return (
@@ -73,6 +76,26 @@ class Timer:
         else:
             return (self.idle_period_details["text"], "", self.idle_period_details["background_color"], self.idle_period_details["foreground_color"])
 
+    def ready_timer(self):
+        self.load_settings()
+        self.load_sounds()
+        return self
+
+    def load_sounds(self):
+        pygame.mixer.init()
+        # Stop sounds
+        self.early_stop_sound = pygame.mixer.Sound(str(Path(self.early_stop_sound)))
+        self.stop_sound = pygame.mixer.Sound(str(Path(self.stop_sound)))
+
+        # Timing period sounds
+        for x in range(len(self.timing_periods)):
+            try:
+                self.timing_periods_details[self.timing_periods[x]]["start_sound"] = pygame.mixer.Sound(
+                    str(Path(self.timing_periods_details[self.timing_periods[x]]["start_sound"])))
+            except pygame.error:
+                print(f"{self.timing_periods_details[self.timing_periods[x]]['start_sound']} was not able to be loaded.")
+        print("Timer sounds loaded")
+
     def load_settings(self):
         # Load the timing periods from the config
         # TODO: Actually load from a config file
@@ -82,7 +105,7 @@ class Timer:
                 "time": 30,
                 "start_time": 30,
                 "end_time": 0,
-                "start_sound": "",
+                "start_sound": "sounds/startMatch.wav",
                 "background_color": (255, 0, 0),
                 "foreground_color": (0, 0, 0)
             },
@@ -90,7 +113,7 @@ class Timer:
                 "time": 120,
                 "start_time": 150,
                 "end_time": 30,
-                "start_sound": "",
+                "start_sound": "sounds/autoToTeleop.wav",
                 "background_color": (255, 0, 0),
                 "foreground_color": (0, 0, 0)
             },
@@ -98,7 +121,7 @@ class Timer:
                 "time": 30,
                 "start_time": 30,
                 "end_time": 0,
-                "start_sound": "",
+                "start_sound": "sounds/endGame.wav",
                 "background_color": (255, 255, 0),
                 "foreground_color": (0, 0, 0)
             }
@@ -108,4 +131,6 @@ class Timer:
             "background_color": (0, 255, 0),
             "foreground_color": (0, 0, 0)
         }
+        self.early_stop_sound = "sounds/endEarly.wav"
+        self.stop_sound = "sounds/endMatch.wav"
         return self

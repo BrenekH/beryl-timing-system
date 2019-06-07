@@ -20,7 +20,7 @@ class CoreDisplay:
 		self.display = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
 		self.clock = pygame.time.Clock()
 
-		self.timer = Timer().load_settings()
+		self.timer = Timer().ready_timer()
 
 		# TODO: Load plugins and switch do_game_display accordingly
 
