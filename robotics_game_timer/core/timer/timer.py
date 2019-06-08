@@ -1,5 +1,6 @@
 import time, pygame, json
 from pathlib import Path
+from ast import literal_eval
 
 # timing_periods = ["auto", "teleop", "endgame"]
 # timing_periods_details = {
@@ -97,43 +98,29 @@ class Timer:
         print("Timer sounds loaded")
 
     def load_settings(self, config_file_name="default.json"):
-        # Load the timing periods from the config
-        # TODO: Actually load from a config file
+        # Load the timing periods from the configuration file
+        
         json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
 
-        self.timing_periods = [period["name"] for period in json_file["timing_periods"]]
-        
-        self.timing_periods_details = {
-            "AUTONOMOUS": {
-                "time": 30,
-                "start_time": 30,
-                "end_time": 0,
-                "start_sound": "sounds/startMatch.wav",
-                "background_color": (255, 0, 0),
-                "foreground_color": (0, 0, 0)
-            },
-            "TELEOP": {
-                "time": 120,
-                "start_time": 150,
-                "end_time": 30,
-                "start_sound": "sounds/autoToTeleop.wav",
-                "background_color": (255, 0, 0),
-                "foreground_color": (0, 0, 0)
-            },
-            "END GAME": {
-                "time": 30,
-                "start_time": 30,
-                "end_time": 0,
-                "start_sound": "sounds/endGame.wav",
-                "background_color": (255, 255, 0),
-                "foreground_color": (0, 0, 0)
-            }
-        }
+        for period in json_file["timing_periods"]:
+            self.timing_periods.append(period["name"])
+
+            period_dict = {}
+
+            for detail in period:
+                if not detail == "name":
+                    if "color" in detail:
+                        period_dict[detail] = literal_eval(period[detail])
+                    else:
+                        period_dict[detail] = period[detail]
+
+            self.timing_periods_details[period["name"]] = period_dict
+
         self.idle_period_details = {
-            "text": "OFF",
-            "background_color": (0, 255, 0),
-            "foreground_color": (0, 0, 0)
+            "text": json_file["idle_period"]["text"],
+            "background_color": literal_eval(json_file["idle_period"]["background_color"]),
+            "foreground_color": literal_eval(json_file["idle_period"]["foreground_color"])
         }
-        self.early_stop_sound = "sounds/endEarly.wav"
-        self.stop_sound = "sounds/endMatch.wav"
+        self.early_stop_sound = json_file["early_stop_sound"]
+        self.stop_sound = json_file["stop_sound"]
         return self
