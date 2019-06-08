@@ -77,8 +77,8 @@ class Timer:
         else:
             return (self.idle_period_details["text"], "", self.idle_period_details["background_color"], self.idle_period_details["foreground_color"])
 
-    def ready_timer(self):
-        self.load_settings()
+    def ready_timer(self, config_file_name="default.json"):
+        self.load_settings(config_file_name=config_file_name)
         self.load_sounds()
         return self
 
@@ -99,7 +99,7 @@ class Timer:
 
     def load_settings(self, config_file_name="default.json"):
         # Load the timing periods from the configuration file
-        
+
         json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
 
         for period in json_file["timing_periods"]:
