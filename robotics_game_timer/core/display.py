@@ -67,3 +67,6 @@ class CoreDisplay:
 		screen_rect = screen_text.get_rect()
 		screen_rect.center = (x, y)
 		self.display.blit(screen_text, screen_rect)
+
+	def load_config(self):
+		pass

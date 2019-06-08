@@ -1,0 +1,38 @@
+{
+	"timing_periods": [
+		{
+			"name": "AUTONOMOUS",
+			"time": 30,
+			"start_time": 30,
+			"end_time": 0,
+			"start_sound": "sounds/startMatch.wav",
+			"background_color": "(255, 0, 0)",
+			"foreground_color": "(0, 0, 0)"
+		},
+		{
+			"name": "TELEOP",
+			"time": 120,
+			"start_time": 150,
+			"end_time": 30,
+			"start_sound": "sounds/autoToTeleop.wav",
+			"background_color": "(255, 0, 0)",
+			"foreground_color": "(0, 0, 0)"
+		},
+		{
+			"name": "END GAME",
+			"time": 30,
+			"start_time": 30,
+			"end_time": 0,
+			"start_sound": "sounds/endGame.wav",
+			"background_color": "(255, 255, 0)",
+			"foreground_color": "(0, 0, 0)"
+		}
+	],
+	"idle_period": {
+		"text": "OFF",
+		"background_color": "(0, 255, 0)",
+		"foreground_color": "(0, 0, 0)"
+	},
+	"early_stop_sound": "sounds/endEarly.wav",
+	"stop_sound": "sounds/endMatch.wav"
+}

@@ -1,0 +1,1 @@
+# Checks for the basic file and folders needed for operation and creates them if they are missing.

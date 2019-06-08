@@ -1,4 +1,4 @@
-import time, pygame
+import time, pygame, json
 from pathlib import Path
 
 # timing_periods = ["auto", "teleop", "endgame"]
@@ -96,10 +96,13 @@ class Timer:
                 print(f"{self.timing_periods_details[self.timing_periods[x]]['start_sound']} was not able to be loaded.")
         print("Timer sounds loaded")
 
-    def load_settings(self):
+    def load_settings(self, config_file_name="default.json"):
         # Load the timing periods from the config
         # TODO: Actually load from a config file
-        self.timing_periods = ["AUTONOMOUS", "TELEOP", "END GAME"]
+        json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
+
+        self.timing_periods = [period["name"] for period in json_file["timing_periods"]]
+        
         self.timing_periods_details = {
             "AUTONOMOUS": {
                 "time": 30,
