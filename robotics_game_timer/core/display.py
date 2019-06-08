@@ -1,6 +1,7 @@
 import pygame
 from .colors import Color
 from .timer import Timer
+from .event_manager import EventManager
 
 class CoreDisplay:
 	def __init__(self):
@@ -21,6 +22,8 @@ class CoreDisplay:
 		self.clock = pygame.time.Clock()
 
 		self.timer = Timer().ready_timer()
+
+		self.manager = EventManager(self)
 
 		# TODO: Load plugins and switch do_game_display accordingly
 

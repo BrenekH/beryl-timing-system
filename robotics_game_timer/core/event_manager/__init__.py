@@ -1,1 +1,1 @@
-from .plugin_loader import *
+from .manager import *
