@@ -7,4 +7,5 @@ class EventManager:
 
 	def load_plugins(self, plugins_to_load):
 		# Use import_module to import the plugins in the provided list
+		# TODO: Loop through plugins_to_load and load them into the manager
 		pass

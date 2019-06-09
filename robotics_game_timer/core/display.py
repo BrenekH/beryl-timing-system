@@ -1,4 +1,5 @@
-import pygame
+import pygame, json
+from pathlib import Path
 from .colors import Color
 from .timer import Timer
 from .event_manager import EventManager
@@ -15,17 +16,23 @@ class CoreDisplay:
 		self.width, self.height = (1280, 720)
 
 		self.timer = None
+		self.manager = None
+
+		self.config = None
 
 	def start(self):
 		pygame.init()
 		self.display = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
 		self.clock = pygame.time.Clock()
 
+		self.load_config()
+
 		self.timer = Timer().ready_timer()
 
 		self.manager = EventManager(self)
 
 		# TODO: Load plugins and switch do_game_display accordingly
+		self.manager.load_plugins(self.config["active_plugins"])
 
 		self.running = True
 		self.__run__()
@@ -71,5 +78,5 @@ class CoreDisplay:
 		screen_rect.center = (x, y)
 		self.display.blit(screen_text, screen_rect)
 
-	def load_config(self):
-		pass
+	def load_config(self, config_name="default.json"):
+		self.config = json.load(open(Path(f"configs/main/{config_name}")))
