@@ -8,4 +8,9 @@ class EventManager:
 	def load_plugins(self, plugins_to_load):
 		# Use import_module to import the plugins in the provided list
 		# TODO: Loop through plugins_to_load and load them into the manager
-		pass
+		for plugin_name in plugins_to_load:
+			plugin = import_module(plugin_name)
+			pluginObject = plugin.Plugin(self)
+			self.loaded_plugins[pluginObject.get_info()["uuid"]] = pluginObject
+			pass
+		print(self.loaded_plugins)
