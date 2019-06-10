@@ -6,7 +6,12 @@ class EventManager:
 
 		self.loaded_plugins = {}
 		
-		self.key_listeners = {}	
+		# Listener collections
+		self.key_listeners = {}
+		self.on_interval_listeners = {}
+		self.period_change_listeners = []
+		self.point_change_listeners = []
+		self.on_loop_listeners = []
 
 	def load_plugins(self, plugins_to_load):
 		# Use import_module to import the plugins in the provided list
@@ -38,3 +43,18 @@ class EventManager:
 				break
 
 		return True
+
+	def register_period_change_listener(self, listener):
+		self.period_change_listeners.append(listener)
+
+	def register_point_change_listener(self, listener):
+		self.point_change_listeners.append(listener)
+
+	def register_on_interval_listener(self, interval_in_seconds, listener):
+		if not interval_in_seconds in self.on_interval_listeners:
+			self.on_interval_listeners[interval_in_seconds] = []
+		self.on_interval_listeners[interval_in_seconds].append(listener)
+
+	def register_on_loop_listener(self, listener):
+		# Do not use unless absolutely necessary
+		self.on_loop_listeners.append(listener)
