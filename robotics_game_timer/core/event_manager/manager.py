@@ -47,14 +47,27 @@ class EventManager:
 	def register_period_change_listener(self, listener):
 		self.period_change_listeners.append(listener)
 
+	def trigger_period_change_listeners(self):
+		pass
+
 	def register_point_change_listener(self, listener):
 		self.point_change_listeners.append(listener)
+
+	def trigger_point_change_listeners(self):
+		pass
 
 	def register_on_interval_listener(self, interval_in_seconds, listener):
 		if not interval_in_seconds in self.on_interval_listeners:
 			self.on_interval_listeners[interval_in_seconds] = []
 		self.on_interval_listeners[interval_in_seconds].append(listener)
 
+	def trigger_on_interval_listeners(self):
+		pass
+
 	def register_on_loop_listener(self, listener):
 		# Do not use unless absolutely necessary
 		self.on_loop_listeners.append(listener)
+
+	def trigger_on_loop_listeners(self):
+		for listener in self.on_loop_listeners:
+			listener()
