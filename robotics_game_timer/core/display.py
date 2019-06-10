@@ -65,7 +65,6 @@ class CoreDisplay:
 				pass
 			else:
 				self.display.fill(timer_status[2])
-				# self.message_to_screen(str(timer_status), timer_status[3], 50, self.width/2, 25)
 				self.message_to_screen(str(timer_status[0]), timer_status[3], 50, self.width/2, (self.height/6) * 2) # Game Mode
 				self.message_to_screen(str(timer_status[1]), timer_status[3], 50, self.width/2, (self.height/6) * 3) # Time Left
 

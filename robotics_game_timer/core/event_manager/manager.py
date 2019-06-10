@@ -17,7 +17,7 @@ class EventManager:
 			pluginObject = plugin.Plugin(self)
 			self.loaded_plugins[pluginObject.info()["uuid"]] = pluginObject
 
-			# Register all of the plugins requirements
+			# Register all of the plugin's requirements
 			pluginObject.register_listeners()
 
 		print(f"{len(self.loaded_plugins)} plugins loaded")
