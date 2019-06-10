@@ -15,7 +15,7 @@ class EventManager:
 			# Import, create, and store Plugin Object
 			plugin = import_module(plugin_name)
 			pluginObject = plugin.Plugin(self)
-			self.loaded_plugins[pluginObject.get_info()["uuid"]] = pluginObject
+			self.loaded_plugins[pluginObject.info()["uuid"]] = pluginObject
 
 			# Register all of the plugins requirements
 			pluginObject.register_listeners()

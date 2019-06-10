@@ -7,7 +7,7 @@
 			"end_time": 0,
 			"start_sound": "sounds/startMatch.wav",
 			"background_color": "(255, 0, 0)",
-			"foreground_color": "(0, 0, 0)"
+			"foreground_color": "(255, 255, 255)"
 		},
 		{
 			"name": "TELEOP",
@@ -16,7 +16,7 @@
 			"end_time": 30,
 			"start_sound": "sounds/autoToTeleop.wav",
 			"background_color": "(255, 0, 0)",
-			"foreground_color": "(0, 0, 0)"
+			"foreground_color": "(255, 255, 255)"
 		},
 		{
 			"name": "END GAME",
@@ -30,8 +30,8 @@
 	],
 	"idle_period": {
 		"text": "OFF",
-		"background_color": "(0, 255, 0)",
-		"foreground_color": "(0, 0, 0)"
+		"background_color": "(0, 128, 0)",
+		"foreground_color": "(255, 255, 255)"
 	},
 	"early_stop_sound": "sounds/endEarly.wav",
 	"stop_sound": "sounds/endMatch.wav"
