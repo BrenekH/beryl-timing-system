@@ -2,22 +2,6 @@ import time, pygame, json
 from pathlib import Path
 from ast import literal_eval
 
-# timing_periods = ["auto", "teleop", "endgame"]
-# timing_periods_details = {
-#   "auto": {
-#       "time": int("seconds"),
-#       "start_time": int("seconds"),
-#       "end_time": int("seconds"),
-#       "start_sound": "path_to_file", 
-#       "background_color": (r, g, b), 
-#       "foreground_color": (r, g, b)}}
-# early_stop_sound = "path_to_file"
-# idle_period_details = {
-#     "text": "",
-#     "background_color": (),
-#     "foreground_color": ()
-# }
-
 class Timer:
     def __init__(self):
         self.timing_periods = []
