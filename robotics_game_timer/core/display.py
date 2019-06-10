@@ -46,6 +46,7 @@ class CoreDisplay:
 				elif event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_SPACE:
 						self.toggle_timer = True
+					self.manager.trigger_key_listeners(event.key)
 				elif event.type == pygame.VIDEORESIZE:
 					self.height = event.h
 					self.width = event.w
