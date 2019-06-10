@@ -9,7 +9,7 @@ class Plugin:
 	def register_listeners(self):
 		self.parent_class.register_key_listener(pygame.K_a, self.test_key_listener)
 
-	def get_info(self):
+	def info(self):
 		return {"name": "Test", "uuid": "zpaw.test_game.test", "family_id": "zpaw.test_game"}
 
 	def test_key_listener(self):
