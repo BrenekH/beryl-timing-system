@@ -3,6 +3,7 @@ import pygame
 class Plugin:
 	def __init__(self, parent_class):
 		self.parent_class = parent_class
+		self.requirements = ["display"]
 		self.test_string = "Hello World"
 		self.test_mutable = 0
 

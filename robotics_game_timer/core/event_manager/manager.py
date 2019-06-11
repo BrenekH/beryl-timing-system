@@ -13,6 +13,10 @@ class EventManager:
 		self.point_change_listeners = []
 		self.on_loop_listeners = []
 
+		# API Requirements
+		self.requested_requirements = []
+		self.plugin_requirements = {"display": False}
+
 	def load_plugins(self, plugins_to_load):
 		# Use import_module to import the plugins in the provided list
 
@@ -24,9 +28,17 @@ class EventManager:
 
 			# Register all of the plugin's requirements
 			pluginObject.register_listeners()
+			self.requested_requirements += pluginObject.requirements
+
+		# Mark the needed API Requirements
+		if "display" in self.requested_requirements:
+			self.plugin_requirements["display"] = True
 
 		print(f"{len(self.loaded_plugins)} plugins loaded")
 		return self
+
+	def need_game_display(self):
+		return self.plugin_requirements["display"]
 
 	def register_key_listener(self, key, listener):
 		if not key in self.key_listeners:
