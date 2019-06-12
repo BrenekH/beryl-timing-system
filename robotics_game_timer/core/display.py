@@ -68,7 +68,9 @@ class CoreDisplay:
 					self.timer.start()
 				self.toggle_timer = False
 
-			# TODO: Actually implement a game display surface
+			# Listener triggering
+			self.manager.trigger_on_loop_listeners()
+
 			timer_status = self.timer.get_status()
 			if self.do_game_display:
 				pygame.draw.rect(self.display, timer_status[2], ((0, 0, self.width, 100)))

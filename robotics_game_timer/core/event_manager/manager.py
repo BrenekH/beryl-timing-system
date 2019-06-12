@@ -40,6 +40,13 @@ class EventManager:
 	def need_game_display(self):
 		return self.plugin_requirements["display"]
 
+	def get_plugin_display(self):
+		if self.parent_class.do_game_display:
+			return self.parent_class.plugin_display
+		else:
+			raise ValueError("No plugins specified the need for the plugin display. Yet one tried to access it.")
+
+	# Listeners
 	def register_key_listener(self, key, listener):
 		if not key in self.key_listeners:
 			self.key_listeners[key] = []
@@ -59,9 +66,9 @@ class EventManager:
 	def register_period_change_listener(self, listener):
 		self.period_change_listeners.append(listener)
 
-	def trigger_period_change_listeners(self):
+	def trigger_period_change_listeners(self, new_period, periods_left):
 		for listener in self.period_change_listeners:
-			listener("Current period name")
+			listener(new_period, periods_left)
 
 	def register_point_change_listener(self, listener):
 		self.point_change_listeners.append(listener)
@@ -82,7 +89,7 @@ class EventManager:
 			listener()
 
 	def register_on_loop_listener(self, listener):
-		# Do not use unless absolutely necessary
+		#! Do not use unless absolutely necessary
 		self.on_loop_listeners.append(listener)
 
 	def trigger_on_loop_listeners(self):
