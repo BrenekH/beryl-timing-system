@@ -6,7 +6,7 @@ class Plugin:
 		self.parent_class = parent_class
 		self.requirements = ["display"]
 
-		self.bracket_id = "itfafternoon"
+		self.bracket_id = "afternoon"
 		self.cached_bracket = None
 		self.last_bracket_update = 0
 

@@ -1,6 +1,4 @@
 {
 	"current_installed_version": "0.0.0",
-	"active_plugins": [
-		"plugins.rand_alliance_display"
-	]
+	"active_plugins": []
 }
