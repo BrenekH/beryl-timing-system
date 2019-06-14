@@ -46,6 +46,11 @@ class EventManager:
 		else:
 			raise ValueError("No plugins specified the need for the plugin display. Yet one tried to access it.")
 
+	# Configs API
+	def get_config(child_class):
+		# TODO: Make this work
+		pass
+
 	# Listeners
 	def register_key_listener(self, key, listener):
 		if not key in self.key_listeners:
