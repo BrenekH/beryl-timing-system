@@ -20,9 +20,11 @@ class Plugin:
 		self.s.connect((TCP_IP, TCP_PORT))
 
 		self.s.send("Hello".encode())
-		self.s.recv(self.bufsize)
+		print(self.s.recv(self.bufsize))
 
-		self.s.send(f"chgbrkt{self.bracket_id}")
+		time.sleep(0.5)
+		self.s.send(f"chgbrkt{self.bracket_id}".encode())
+		self.s.recv(self.bufsize)
 
 	def register_listeners(self):
 		self.parent_class.register_on_loop_listener(self.on_loop)
@@ -35,13 +37,17 @@ class Plugin:
 		plugin_display.fill((255, 255, 255))
 		plugin_display_rect = plugin_display.get_rect()
 
-		self.get_bracket_from_server()
+		num_dict = self.get_match_team_numbers_from_server()
 
 		# TODO: Get the team numbers from the server
-		now_playing_red_team1, now_playing_red_team2 = ("99", "98")
-		now_playing_blue_team1, now_playing_blue_team2 = ("9", "8")
-		up_next_red_team1, up_next_red_team2 = ("97", "96")
-		up_next_blue_team1, up_next_blue_team2 = ("7", "6")
+		# now_playing_red_team1, now_playing_red_team2 = ("99", "98")
+		# now_playing_blue_team1, now_playing_blue_team2 = ("9", "8")
+		# up_next_red_team1, up_next_red_team2 = ("97", "96")
+		# up_next_blue_team1, up_next_blue_team2 = ("7", "6")
+		now_playing_red_team1, now_playing_red_team2 = (num_dict["nprt1"], num_dict["nprt2"])
+		now_playing_blue_team1, now_playing_blue_team2 = (num_dict["npbt1"], num_dict["npbt2"])
+		up_next_red_team1, up_next_red_team2 = (num_dict["unrt1"], num_dict["unrt2"])
+		up_next_blue_team1, up_next_blue_team2 = (num_dict["unbt1"], num_dict["unbt2"])
 
 		# Place numbers on the screen
 		now_playing_image_with_team = self.now_playing_image.copy()
@@ -86,17 +92,41 @@ class Plugin:
 		surface.blit(screen_text, (x, y))
 
 	def get_match_team_numbers_from_server(self):
-		# Return dict with nprt1, nprt2, npbt1, npbt2, uprt1, uprt2, upbt1, upbt2
+		# Return dict with nprt1, nprt2, npbt1, npbt2, unrt1, unrt2, unbt1, unbt2
 		return_dict = {}
+		full_bracket = self.get_bracket_from_server()
+
+		last_match_completed = 0
+		for match_id in full_bracket["matches"]:
+			if full_bracket["matches"][match_id]["complete"]:
+				last_match_completed = int(match_id)
+
+		np_match = str(last_match_completed + 1)
+		try:
+			return_dict["nprt1"], return_dict["nprt2"] = (str(full_bracket["matches"][np_match]["team1"][0]), str(full_bracket["matches"][np_match]["team1"][1]))
+			return_dict["npbt1"], return_dict["npbt2"] = (str(full_bracket["matches"][np_match]["team2"][0]), str(full_bracket["matches"][np_match]["team2"][1]))
+		except Exception as e:
+			print(str(e))
+			return_dict["nprt1"], return_dict["nprt2"] = ("", "")
+			return_dict["npbt1"], return_dict["npbt2"] = ("", "")
+
+		un_match = str(last_match_completed + 2)
+		try:
+			return_dict["unrt1"], return_dict["unrt2"] = (str(full_bracket["matches"][un_match]["team1"][0]), str(full_bracket["matches"][un_match]["team1"][1]))
+			return_dict["unbt1"], return_dict["unbt2"] = (str(full_bracket["matches"][un_match]["team2"][0]), str(full_bracket["matches"][un_match]["team2"][1]))
+		except Exception as e:
+			print(str(e))
+			return_dict["unrt1"], return_dict["unrt2"] = ("", "")
+			return_dict["unbt1"], return_dict["unbt2"] = ("", "")
 
 		return return_dict
 
 	def get_bracket_from_server(self):
-		if not self.last_bracket_update < int(time.time() - 1):
+		if not self.last_bracket_update < int(time.time() - 4):
 			return self.cached_bracket
 		else:
 			self.s.send("gbifullbracket".encode())
 			self.cached_bracket = json.loads(self.s.recv(self.bufsize).decode('utf-8'))
-			print(self.cached_bracket)
+			self.last_bracket_update = int(time.time())
 			return self.cached_bracket
 		
