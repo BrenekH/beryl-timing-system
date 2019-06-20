@@ -32,7 +32,6 @@ class CoreDisplay:
 
 		self.manager = EventManager(self)
 
-		# TODO: Load plugins and switch do_game_display accordingly
 		self.manager.load_plugins(self.config["active_plugins"])
 
 		self.do_game_display = self.manager.need_game_display()
