@@ -39,11 +39,6 @@ class Plugin:
 
 		num_dict = self.get_match_team_numbers_from_server()
 
-		# TODO: Get the team numbers from the server
-		# now_playing_red_team1, now_playing_red_team2 = ("99", "98")
-		# now_playing_blue_team1, now_playing_blue_team2 = ("9", "8")
-		# up_next_red_team1, up_next_red_team2 = ("97", "96")
-		# up_next_blue_team1, up_next_blue_team2 = ("7", "6")
 		now_playing_red_team1, now_playing_red_team2 = (num_dict["nprt1"], num_dict["nprt2"])
 		now_playing_blue_team1, now_playing_blue_team2 = (num_dict["npbt1"], num_dict["npbt2"])
 		up_next_red_team1, up_next_red_team2 = (num_dict["unrt1"], num_dict["unrt2"])
