@@ -1,3 +1,8 @@
 language: python
 
-script: echo "Hi"
+install:
+  - pip install -r requirements.txt
+  - chmod +x travis_setup_env.sh && ./travis_setup_env.sh
+
+script:
+  - python test_env/test_imports.py
