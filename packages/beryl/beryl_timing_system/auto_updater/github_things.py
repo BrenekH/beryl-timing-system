@@ -1,4 +1,4 @@
-import os, requests, json
+import requests, json
 
 class Repository:
 	def __init__(self, owner, repo_name, api_key=None):

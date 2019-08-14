@@ -37,7 +37,7 @@ class CoreDisplay:
 		self.do_game_display = self.manager.need_game_display()
 
 		if self.do_game_display:
-			self.plugin_display = pygame.Surface((self.width, self.height - 100))
+			self.plugin_display = pygame.Surface((self.width, self.height - 100)) # lgtm [py/call/wrong-arguments]
 
 		self.running = True
 		self.__run__()

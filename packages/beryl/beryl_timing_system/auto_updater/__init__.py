@@ -1,6 +1,6 @@
 import os
 from semver import match
-from .github_things import *
+from .github_things import Repository
 
 def check_for_update():
 	# Return true if server version is greater than current version

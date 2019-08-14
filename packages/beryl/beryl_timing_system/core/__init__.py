@@ -1,2 +1,2 @@
-from .display import *
-from .colors import *
+from .display import CoreDisplay
+from .colors import Color
