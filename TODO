@@ -2,3 +2,7 @@ Main.py:
 	☐ Calls the Auto-Updater
 	☐ Instantiates the Core and starts the loop
 	☐ Catches any errors, and exports them appropropriately
+
+Tests:
+	Beryl:
+	Plugin Helper:
