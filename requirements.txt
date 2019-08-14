@@ -1,4 +1,4 @@
 pygame
-gql_py
+semver
 pyinstaller
 pygame-menu
