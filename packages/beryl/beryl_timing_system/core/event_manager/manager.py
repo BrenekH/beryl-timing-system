@@ -50,7 +50,7 @@ class EventManager:
 			raise ValueError("No plugins specified the need for the plugin display. Yet one tried to access it.")
 
 	# Configs API
-	def get_config(child_class):
+	def get_config(self, child_class):
 		# TODO: Make this work
 		pass
 
