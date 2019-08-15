@@ -2,3 +2,4 @@ pygame
 semver
 pyinstaller
 pygame-menu
+pytest
