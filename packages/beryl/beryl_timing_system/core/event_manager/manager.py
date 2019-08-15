@@ -82,15 +82,6 @@ class EventManager:
 		for listener in self.period_change_listeners:
 			listener(new_period, periods_left)
 
-	def register_point_change_listener(self, listener):
-		self.point_change_listeners.append(listener)
-
-	def trigger_point_change_listeners(self):
-		blue_points, red_points = (0, 0)
-		for listener in self.point_change_listeners(self):
-			# TODO: Actually grab points from the Core
-			listener(blue_points, red_points)
-
 	def register_on_loop_listener(self, listener):
 		#! Do not use unless absolutely necessary
 		self.on_loop_listeners.append(listener)
