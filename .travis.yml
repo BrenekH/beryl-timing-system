@@ -20,4 +20,4 @@ env:
     - SDL_AUDIODRIVER=audio
 
 script:
-  - python test_env/test_imports.py
+  - pytest

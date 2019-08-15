@@ -17,9 +17,6 @@ class PluginBase(abc.ABC):
 	def register_period_change_listener(self, listener):
 		self._super_class.register_period_change_listener(listener)
 
-	def register_point_change_listener(self, listener):
-		self._super_class.register_point_change_listener(listener)
-
 	def register_on_loop_listener(self, listener):
 		self._super_class.register_on_loop_listener(listener)
 
