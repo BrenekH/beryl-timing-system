@@ -10,4 +10,6 @@ Tests:
 			☐ Test triggering listeners
 	Plugin Helper:
 		PluginBase:
-			
+			✔ Call the proper register listeners @done(19-08-15 09:08)
+			☐ Get cross plugin data
+			☐ Set cross plugin data
