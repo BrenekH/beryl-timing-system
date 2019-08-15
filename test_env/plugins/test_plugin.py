@@ -12,8 +12,12 @@ class Plugin(PluginBase):
 
 	def register_listeners(self):
 		self.register_key_listener(pygame.K_a, self.test_key_listener)
+		self.register_key_listener("*", self.test_all_key_listener)
 
 	def test_key_listener(self):
 		self.test_mutable += 1
 		print(self.test_string + str(self.test_mutable))
 		self.save_cross_plugin_data("mutable", self.test_mutable)
+
+	def test_all_key_listener(self, key):
+		print(f"All keys {key}")

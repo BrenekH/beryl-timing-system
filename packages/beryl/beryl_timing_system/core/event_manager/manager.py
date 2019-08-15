@@ -8,9 +8,7 @@ class EventManager:
 		
 		# Listener collections
 		self.key_listeners = {}
-		self.on_interval_listeners = {}
 		self.period_change_listeners = []
-		self.point_change_listeners = []
 		self.on_loop_listeners = []
 
 		# API Requirements
@@ -56,7 +54,6 @@ class EventManager:
 
 	# Listeners
 	def register_key_listener(self, key, listener):
-		# TODO: Make * add the listener to all keys
 		if not key in self.key_listeners:
 			self.key_listeners[key] = []
 		self.key_listeners[key].append(listener)
@@ -67,7 +64,7 @@ class EventManager:
 		for key in self.key_listeners:
 			if key == '*':
 				for listener in self.key_listeners[key]:
-					listener()
+					listener(key=key_triggered)
 			elif key == key_triggered:
 				for listener in self.key_listeners[key]:
 					listener()
@@ -83,7 +80,6 @@ class EventManager:
 			listener(new_period, periods_left)
 
 	def register_on_loop_listener(self, listener):
-		#! Do not use unless absolutely necessary
 		self.on_loop_listeners.append(listener)
 
 	def trigger_on_loop_listeners(self):
