@@ -5,4 +5,7 @@ Main.py:
 
 Tests:
 	Beryl:
+		Event Manager:
+			☐ Test registering listeners
+			☐ Test triggering listeners
 	Plugin Helper:
