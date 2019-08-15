@@ -78,17 +78,18 @@ keyListenerPlugin = KeyListenerPlugin(mockSuperClass)
 periodListenerPlugin = PeriodListenerPlugin(mockSuperClass)
 loopListenerPlugin = LoopListenerPlugin(mockSuperClass)
 
-def test_call_register_key_listener():
-	mockSuperClass.reset()
-	keyListenerPlugin.register_listeners()
-	assert mockSuperClass.key_listener_triggered == True
+class TestCallListeners:
+	def test_call_register_key_listener(self):
+		mockSuperClass.reset()
+		keyListenerPlugin.register_listeners()
+		assert mockSuperClass.key_listener_triggered == True
 
-def test_call_register_period_change_listener():
-	mockSuperClass.reset()
-	periodListenerPlugin.register_listeners()
-	assert mockSuperClass.period_change_triggered == True
+	def test_call_register_period_change_listener(self):
+		mockSuperClass.reset()
+		periodListenerPlugin.register_listeners()
+		assert mockSuperClass.period_change_triggered == True
 
-def test_call_register_on_loop_listener():
-	mockSuperClass.reset()
-	loopListenerPlugin.register_listeners()
-	assert mockSuperClass.on_loop_triggered == True
+	def test_call_register_on_loop_listener(self):
+		mockSuperClass.reset()
+		loopListenerPlugin.register_listeners()
+		assert mockSuperClass.on_loop_triggered == True
