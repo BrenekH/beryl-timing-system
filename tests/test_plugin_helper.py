@@ -71,6 +71,20 @@ class LoopListenerPlugin(PluginBase):
 	def listener(self):
 		self.test_mutable += 1
 
+class SaveCrossPluginDataPlugin(PluginBase):
+	def __init__(self, parent_class):
+		PluginBase.__init__(self, parent_class, "Save Cross Plugin Data", "zpaw.test_cpd.save", "zpaw.test_cpd")
+		self.parent_class = parent_class
+		self.requirements = []
+		self.save_cross_plugin_data("my_key", "my_value")
+
+class GetCrossPluginDataPlugin(PluginBase):
+	def __init__(self, parent_class):
+		PluginBase.__init__(self, parent_class, "Get Cross Plugin Data", "zpaw.test_cpd.get", "zpaw.test_cpd")
+		self.parent_class = parent_class
+		self.requirements = []
+		self.get_cross_plugin_data("my_key")
+
 mockSuperClass = MockPluginSuperClass()
 
 # Listener plugin instances
@@ -93,3 +107,14 @@ class TestCallListeners:
 		mockSuperClass.reset()
 		loopListenerPlugin.register_listeners()
 		assert mockSuperClass.on_loop_triggered == True
+
+class TestCallCrossPluginData:
+	def test_call_save_cross_plugin_data(self):
+		mockSuperClass.reset()
+		SaveCrossPluginDataPlugin(mockSuperClass)
+		assert mockSuperClass.set_plugin_data_triggered == True
+
+	def test_call_get_cross_plugin_data(self):
+		mockSuperClass.reset()
+		GetCrossPluginDataPlugin(mockSuperClass)
+		assert mockSuperClass.get_plugin_data_triggered == True
