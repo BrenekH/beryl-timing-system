@@ -1,5 +1,6 @@
 import pygame, json
 from pathlib import Path
+from os import mkdir
 from .colors import Color
 from .timer import Timer
 from .event_manager import EventManager
@@ -93,4 +94,12 @@ class CoreDisplay:
 		self.display.blit(screen_text, screen_rect)
 
 	def load_config(self, config_name="default.json"):
-		self.config = json.load(open(Path(f"configs/main/{config_name}")))
+		try:
+			self.config = json.load(open(Path(f"configs/main/{config_name}")))
+		except:
+			if Path("configs/main").is_dir():
+				json.dump({"current_installed_version": "0.0.0", "active_plugins": []}, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
+			else:
+				mkdir("configs/main")
+				json.dump({"current_installed_version": "0.0.0", "active_plugins": []}, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
+			self.config = json.load(open(Path(f"configs/main/{config_name}")))

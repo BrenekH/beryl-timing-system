@@ -15,8 +15,8 @@ def check_for_sounds():
     return check_for_and_create_folder(f"sounds")
 
 def check_for_and_create_folder(path: str):
-    configs_dir = Path(path)
-    if not configs_dir.is_dir():
-        mkdir(str(configs_dir))
+    dir_path = Path(path)
+    if not dir_path.is_dir():
+        mkdir(str(dir_path))
         print("Made new dir")
     return True

@@ -1,3 +1,7 @@
+# Inno Setup
+InnoSetupOut/
+*.iss
+
 # VSCode settings
 settings.json
 
