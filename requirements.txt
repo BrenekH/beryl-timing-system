@@ -3,3 +3,4 @@ semver
 pyinstaller
 pygame-menu
 pytest
+requests

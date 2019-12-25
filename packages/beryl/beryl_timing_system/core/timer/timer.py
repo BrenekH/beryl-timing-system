@@ -1,6 +1,7 @@
 import time, pygame, json
 from pathlib import Path
 from ast import literal_eval
+from os import mkdir
 
 class Timer:
 	def __init__(self):
@@ -18,6 +19,17 @@ class Timer:
 		self._current_period_index = 0
 
 		self.sound_enabled = True
+
+		self.default_config = {
+			"timing_periods": [],
+			"idle_period": {
+				"text": "OFF",
+				"background_color": "(0, 128, 0)",
+				"foreground_color": "(255, 255, 255)"
+			},
+			"early_stop_sound": "",
+			"stop_sound": ""
+		}
 
 	def start(self):
 		self._period_start_time = time.time()
@@ -47,6 +59,12 @@ class Timer:
 	def get_status(self):
 		# Return background and foreground colors, and text to display
 		if self.timer_running:
+			print(self.timing_periods_details)
+			if len(self.timing_periods_details) < 1:
+				# TODO: Actually produce this message for the end user
+				print("There are no timing periods setup, please create them in the settings menu and try again.")
+				self.timer_running = False
+				return self.get_status()	# Recursion so that the return statement when timer_running is false is in only one place
 			seconds_elapsed = time.time() - self._period_start_time
 			if seconds_elapsed >= self.timing_periods_details[self.timing_periods[self._current_period_index]]["time"]:
 				# Progress to the next period or end the timer
@@ -57,7 +75,7 @@ class Timer:
 					self._period_start_time = time.time()
 					if self.sound_enabled:
 						self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_sound"].play()
-					
+							
 			self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_time"] - seconds_elapsed
 			return (
 				self.timing_periods[self._current_period_index],
@@ -87,7 +105,7 @@ class Timer:
 				except pygame.error:
 					print(f"{self.timing_periods_details[self.timing_periods[x]]['start_sound']} was not able to be loaded.")
 			print("Timer sounds loaded")
-		except pygame.error as e:
+		except Exception as e:
 			self.sound_enabled = False
 			print("Disabling sounds because of error: " + str(e))
 		
@@ -95,7 +113,15 @@ class Timer:
 	def load_settings(self, config_file_name="default.json"):
 		# Load the timing periods from the configuration file
 
-		json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
+		try:
+			json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
+		except:
+			if Path("configs/timer").is_dir():
+				json.dump(self.default_config, open(Path(f"configs/timer/{config_file_name}"), "w"), indent=4)
+			else:
+				mkdir("configs/timer")
+				json.dump(self.default_config, open(Path(f"configs/timer/{config_file_name}"), "w"), indent=4)
+			json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
 
 		for period in json_file["timing_periods"]:
 			self.timing_periods.append(period["name"])
