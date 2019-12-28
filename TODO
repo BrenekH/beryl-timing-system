@@ -1,3 +1,13 @@
+Config API:
+	Basic API Functions:
+		☐ get_current_config
+			Returns the user selected config
+		☐ get_configurations
+			Returns all configurations created by the user
+	Internal Modules:
+	Plugins:
+		☐ Expose through Plugin Manager(EventManager.get_config is a start but needs to be implemented and expanded)
+
 Main.py:
 	☐ Calls the Auto-Updater
 	☐ Instantiates the Core and starts the loop
