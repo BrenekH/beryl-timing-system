@@ -22,6 +22,8 @@ class CoreDisplay:
 
 		self.config = None
 
+		self.default_config = {"current_installed_version": "0.0.0", "active_plugins": []}
+
 	def start(self):
 		pygame.init()
 		self.display = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
@@ -98,8 +100,8 @@ class CoreDisplay:
 			self.config = json.load(open(Path(f"configs/main/{config_name}")))
 		except:
 			if Path("configs/main").is_dir():
-				json.dump({"current_installed_version": "0.0.0", "active_plugins": []}, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
+				json.dump(self.default_config, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
 			else:
 				mkdir("configs/main")
-				json.dump({"current_installed_version": "0.0.0", "active_plugins": []}, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
+				json.dump(self.default_config, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
 			self.config = json.load(open(Path(f"configs/main/{config_name}")))

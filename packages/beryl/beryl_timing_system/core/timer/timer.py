@@ -59,7 +59,6 @@ class Timer:
 	def get_status(self):
 		# Return background and foreground colors, and text to display
 		if self.timer_running:
-			print(self.timing_periods_details)
 			if len(self.timing_periods_details) < 1:
 				# TODO: Actually produce this message for the end user
 				print("There are no timing periods setup, please create them in the settings menu and try again.")
