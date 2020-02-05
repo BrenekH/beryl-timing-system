@@ -19,6 +19,18 @@ class InternalConfigManager:
 	def __init__(self, config_manager: ConfigManager):
 		self.__config_manager = config_manager
 
+	def get_timer_config(self):
+		pass
+
+	def set_timer_config(self):
+		pass
+
+	def get_main_config(self):
+		pass
+
+	def set_main_config(self):
+		pass
+
 class ExternalConfigManager:
 	def __init__(self, config_manager: ConfigManager):
 		self.__config_manager = config_manager
