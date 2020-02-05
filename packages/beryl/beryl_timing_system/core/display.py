@@ -3,7 +3,7 @@ from pathlib import Path
 from os import mkdir
 from .colors import Color
 from .timer import Timer
-from .event_manager import EventManager
+from .plugin_manager import PluginManager
 
 class CoreDisplay:
 	def __init__(self):
@@ -33,7 +33,7 @@ class CoreDisplay:
 
 		self.timer = Timer().ready_timer()
 
-		self.manager = EventManager(self)
+		self.manager = PluginManager(self)
 
 		self.manager.load_plugins(self.config["active_plugins"])
 

@@ -1,6 +1,6 @@
 from importlib import import_module
 
-class EventManager:
+class PluginManager:
 	def __init__(self, parent_class):
 		self.parent_class = parent_class
 
