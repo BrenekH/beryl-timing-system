@@ -7,7 +7,7 @@ class ConfigManager:
 		if directory:
 			self.__directory: Path = Path(directory)
 		else:
-			self.__directory: Path = Path(getenv('LOCALAPPDATA') + "/beryl/data")
+			self.__directory: Path = Path(getenv('LOCALAPPDATA') / "beryl/data")
 		self.__validate_directory()
 
 	def __validate_directory(self):
