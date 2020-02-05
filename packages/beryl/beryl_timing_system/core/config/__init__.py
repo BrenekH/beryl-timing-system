@@ -13,8 +13,7 @@ class ConfigManager:
 	def __validate_directory(self):
 		"""Ensures that all folders are properly created in the directory supplied to the class
 		"""
-		# TODO: Implement
-		pass
+		self.__directory.mkdir(parents=True, exist_ok=True)
 
 class InternalConfigManager:
 	def __init__(self, config_manager: ConfigManager):

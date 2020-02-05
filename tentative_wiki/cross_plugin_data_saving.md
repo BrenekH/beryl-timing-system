@@ -2,7 +2,7 @@
 The Cross Plugin Data API allows plugins within a family to share non-persistent data between themselves.
 
 ## How to Use
-The data is stored using key value pairs. To access the data, pass a key to `EventManager.get_cross_plugin_data(self, key)`. Saving is done in a very similar way using `EventManager.save_cross_plugin_data(self, key, value)`.
+The data is stored using key value pairs. To access the data, pass a key to `PluginManager.get_cross_plugin_data(self, key)`. Saving is done in a very similar way using `PluginManager.save_cross_plugin_data(self, key, value)`.
 
 __Extended Example__
 

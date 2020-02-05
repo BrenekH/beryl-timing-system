@@ -6,7 +6,7 @@ Config API:
 			Returns all configurations created by the user
 	Internal Modules:
 	Plugins:
-		☐ Expose through Plugin Manager(EventManager.get_config is a start but needs to be implemented and expanded)
+		☐ Expose through Plugin Manager(PluginManager.get_config is a start but needs to be implemented and expanded)
 
 Main.py:
 	☐ Calls the Auto-Updater
