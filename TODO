@@ -4,6 +4,7 @@ Config API:
 			Returns the user selected config
 		☐ get_configurations
 			Returns all configurations created by the user
+		Limited by whether accessed by internal modules or plugins
 	Internal Modules:
 	Plugins:
 		☐ Expose through Plugin Manager(PluginManager.get_config is a start but needs to be implemented and expanded)
