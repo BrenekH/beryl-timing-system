@@ -48,9 +48,13 @@ class PluginManager:
 			raise ValueError("No plugins specified the need for the plugin display. Yet one tried to access it.")
 
 	# Configs API
-	def get_config(self, child_class):
-		# TODO: Make this work
-		pass
+	def get_current_config(self, child_class):
+		# TODO: Implement
+		return "This feature is not yet implemented"
+
+	def get_current_family_config(self, child_class):
+		# TODO: Implement
+		return "This feature is not yet implemented"
 
 	# Listeners
 	def register_key_listener(self, key, listener):
