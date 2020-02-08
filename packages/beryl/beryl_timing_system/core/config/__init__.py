@@ -14,23 +14,65 @@ class ConfigManager:
 		"""Ensures that all folders are properly created in the directory supplied to the class
 		"""
 		self.__directory.mkdir(parents=True, exist_ok=True)
+	
+	def get_config(self, config_name: str):
+		return None
 
-class InternalConfigManager:
-	def __init__(self, config_manager: ConfigManager):
-		self.__config_manager = config_manager
+	def save_config(self, config_name: str, config_content: str, overwrite: bool):
+		return None
 
-	def get_timer_config(self):
-		pass
+	
+	# single plugin config methods
+	def get_plugin_config(self, plugin_id: str, config_id: int):
+		return None
 
-	def set_timer_config(self):
-		pass
+	def get_current_plugin_config(self, plugin_id: str):
+		return None
 
-	def get_main_config(self):
-		pass
+	def list_plugin_configs(self, plugin_id: str):
+		return None
 
-	def set_main_config(self):
-		pass
+	def save_plugin_config(self, plugin_id: str, config_name: str, config_content: str, overwrite:bool=False):
+		return None
 
-class ExternalConfigManager:
-	def __init__(self, config_manager: ConfigManager):
-		self.__config_manager = config_manager
+
+	# family config methods
+	def get_plugin_family_config(self, family_id: str, config_id: int):
+		return None
+
+	def get_current_plugin_family_config(self, family_id: str):
+		return None
+
+	def list_plugin_family_configs(self, family_id: str):
+		return None
+
+	def save_plugin_family_config(self, family_id: str, config_name: str, config_content: str, overwrite:bool=False):
+		return None
+
+
+	# main config methods
+	def get_main_config(self, config_id: int):
+		return None
+
+	def get_current_main_config(self):
+		return None
+
+	def list_main_configs(self):
+		return None
+
+	def save_main_config(self, config_name: str, config_content: str, overwrite:bool=False):
+		return None
+
+
+	# timer config methods
+	def get_timer_config(self, config_id: int):
+		return None
+
+	def get_current_timer_config(self):
+		return None
+
+	def list_timer_configs(self):
+		return None
+
+	def save_timer_config(self, config_name: str, config_content: str, overwrite:bool=False):
+		return None
