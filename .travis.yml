@@ -1,7 +1,5 @@
-# Disable sudo to speed up the build
-sudo: false
-
 language: python
+os: linux
 
 # Because Beryl is going to run on Python 3.6 or later
 python:
