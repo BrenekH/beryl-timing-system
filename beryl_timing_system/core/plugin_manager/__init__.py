@@ -1,1 +1,1 @@
-from .manager import PluginManager
+from .manager import Event, PluginManager
