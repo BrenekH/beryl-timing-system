@@ -6,9 +6,15 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 PyInstaller = "*"
+beryl-plugin = "*"
+beryl-timing-system = {editable = true,path = "."}
 
 [packages]
 pygame = "*"
 semver = "*"
 pygame-menu = "*"
 requests = "*"
+colorama = "*"
+
+[pipenv]
+allow_prereleases = true

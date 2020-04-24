@@ -37,7 +37,10 @@ class Timer:
 		self._loops = len(self.timing_periods)
 		self._current_period_index = 0
 		if self.sound_enabled:
-			self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_sound"].play()
+			try:
+				self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_sound"].play()
+			except AttributeError:
+				pass
 
 	def stop(self, early=True):
 		self.timer_running = False
@@ -101,8 +104,10 @@ class Timer:
 				try:
 					self.timing_periods_details[self.timing_periods[x]]["start_sound"] = pygame.mixer.Sound(
 						str(Path(self.timing_periods_details[self.timing_periods[x]]["start_sound"])))
-				except pygame.error:
-					print(f"{self.timing_periods_details[self.timing_periods[x]]['start_sound']} was not able to be loaded.")
+				except pygame.error as e:
+					print(f"{self.timing_periods_details[self.timing_periods[x]]['start_sound']} was not able to be loaded, because of pygame error: {e}")
+				except IOError as e:
+					print(f"{self.timing_periods_details[self.timing_periods[x]]['start_sound']} was not able to be loaded, because of IOError: {e}")
 			print("Timer sounds loaded")
 		except Exception as e:
 			self.sound_enabled = False
