@@ -3,7 +3,7 @@ from pathlib import Path
 from os import mkdir
 from .colors import Color
 from .timer import Timer
-from .plugin_manager import PluginManager
+from .plugin_manager import Event, PluginManager
 
 class CoreDisplay:
 	def __init__(self):
@@ -54,7 +54,10 @@ class CoreDisplay:
 				elif event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_SPACE:
 						self.toggle_timer = True
-					self.manager.trigger_key_listeners(event.key)
+					try:
+						self.manager.trigger_event(Event.key, chr(event.key))
+					except ValueError:
+						pass
 				elif event.type == pygame.VIDEORESIZE:
 					self.height = event.h
 					self.width = event.w
@@ -71,7 +74,7 @@ class CoreDisplay:
 				self.toggle_timer = False
 
 			# Listener triggering
-			self.manager.trigger_on_loop_listeners()
+			self.manager.trigger_event(Event.loop)
 
 			timer_status = self.timer.get_status()
 			if self.do_game_display:
