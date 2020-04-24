@@ -1,78 +1,135 @@
-from pathlib import Path
+from colorama import Fore
+from json import dump
 from os import getenv
+from pathlib import Path
+from random import choice
+from string import ascii_letters
+from typing import List
 
-class ConfigManager:
+""" Data dir setup
+root:
+	scene_registry.json
+	display.json
+	scenes:
+		random.json
+	timer:
+		random.json
+	plugins:
+		plugin1:
+			random.json
+		plugin2:
+			random.json
+"""
+
+# Sample scene_registry.json
+{
+	"random" : {
+		"uuid": "random",
+		"name": "Scene 1"
+	}, 
+	"otherI" : {
+		"uuid": "otherI",
+		"name": "Scene 2"
+	}
+}
+
+# Sample scene.json
+{
+	"name": "Scene 1",
+	"uuid": "random",
+	"layout": "normal",
+	"plugins": [
+		"game_map",
+		"in_between_bracket"
+	]
+}
+
+class SceneManager:
+	registry_file_name = "scene_registry.json"
+
 	def __init__(self, directory: str=None):
-		# Directory Management
+		# Instance vars
+		self._registry = {}
+
+		# Directory management
 		if directory:
-			self.__directory: Path = Path(directory)
+			self.__dir: Path = Path(directory)
 		else:
-			self.__directory: Path = Path(getenv('LOCALAPPDATA') / "beryl/data")
+			self.__dir: Path = Path(getenv('LOCALAPPDATA') / "beryl/data")
 		self.__validate_directory()
 
-	def __validate_directory(self):
+		self.__setup_data_dirs()
+
+	def __validate_directory(self, rel_dir: str=None):
 		"""Ensures that all folders are properly created in the directory supplied to the class
 		"""
-		self.__directory.mkdir(parents=True, exist_ok=True)
-	
-	def get_config(self, config_name: str):
+		if rel_dir:
+			(self.__dir / rel_dir).mkdir(parents=True, exist_ok=True)
+		else:
+			self.__dir.mkdir(parents=True, exist_ok=True)
+
+	def __validate_file(self, rel_file_path: str, to_write:str=""):
+		"""Checks for a file in the relative file path and if file doesn't exist, writes to_write to the file
+		"""
+		full_path = self.__dir / rel_file_path
+
+		if not full_path.is_file() and not full_path.is_dir():
+			with open(full_path, "w") as f:
+				f.write(to_write)
+
+	def __check_for_file(self, rel_file_path: str) -> bool:
+		"""Checks for a file in the relative file path
+		"""
+		full_path = self.__dir / rel_file_path
+
+		if not full_path.is_file() and not full_path.is_dir():
+			return False
+		
+		return True
+
+	def __setup_data_dirs(self):
+		# Directories
+		self.__validate_directory("scenes")
+		self.__validate_directory("timer")
+		self.__validate_directory("plugins")
+
+		# Files
+		if not self.__check_for_file(registry_file_name):
+			self.new_scene()
+			self.save_registry()
+
+	def new_scene(self, scene_name="New Scene"):
+		loop_counter = 0
+		new_uuid = ""
+		while True:
+			new_uuid = self.__random_uuid()
+
+			if new_uuid not in self._registry:
+				break
+
+			if loop_counter > 200:
+				print(f"{Fore.RED}Unable to generate new UUID after 200 tries{Fore.RESET}")
+				break
+			loop_counter += 1
+		
 		return None
+		
+		self._registry[new_uuid] = {"uuid": new_uuid, "name": scene_name}
 
-	def save_config(self, config_name: str, config_content: str, overwrite: bool):
-		return None
+		self.save_scene(new_uuid, {"name": scene_name, "uuid": new_uuid, "layout": "normal", "plugins": []})
 
-	
-	# single plugin config methods
-	def get_plugin_config(self, plugin_id: str, config_id: int):
-		return None
+		# TODO: Generate blank timer json
 
-	def get_current_plugin_config(self, plugin_id: str):
-		return None
+	def __random_uuid(self) -> str:
+		"""Generate a random string with the combination of lowercase and uppercase letters"""
+		return "".join(choice(ascii_letters) for _ in range(8))
 
-	def list_plugin_configs(self, plugin_id: str):
-		return None
+	def save_registry(self):
+		dump(self._registry, self.__dir / registry_file_name)
 
-	def save_plugin_config(self, plugin_id: str, config_name: str, config_content: str, overwrite:bool=False):
-		return None
+	def validate_plugin_folders(self, plugin_ids: List[str]):
+		# TODO: Loop through plugin_ids and validate directory on their name and plugins folder
+		pass
 
-
-	# family config methods
-	def get_plugin_family_config(self, family_id: str, config_id: int):
-		return None
-
-	def get_current_plugin_family_config(self, family_id: str):
-		return None
-
-	def list_plugin_family_configs(self, family_id: str):
-		return None
-
-	def save_plugin_family_config(self, family_id: str, config_name: str, config_content: str, overwrite:bool=False):
-		return None
-
-
-	# main config methods
-	def get_main_config(self, config_id: int):
-		return None
-
-	def get_current_main_config(self):
-		return None
-
-	def list_main_configs(self):
-		return None
-
-	def save_main_config(self, config_name: str, config_content: str, overwrite:bool=False):
-		return None
-
-
-	# timer config methods
-	def get_timer_config(self, config_id: int):
-		return None
-
-	def get_current_timer_config(self):
-		return None
-
-	def list_timer_configs(self):
-		return None
-
-	def save_timer_config(self, config_name: str, config_content: str, overwrite:bool=False):
-		return None
+	def save_scene(self, scene_uuid, scene_json):
+		dump(scene_json, self.__dir / f"scenes/{scene_uuid}.json")
