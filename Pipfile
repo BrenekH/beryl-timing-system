@@ -12,7 +12,7 @@ beryl-timing-system = {editable = true,path = "."}
 [packages]
 pygame = "*"
 semver = "*"
-pygame-menu = ">=3.0.0"
+pygame-menu = "~=3.0"
 requests = "*"
 colorama = "*"
 
