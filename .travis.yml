@@ -11,8 +11,7 @@ cache: pip
 
 install:
   - pip install pipenv
-  - pipenv lock --dev -r > requirements.txt
-  - pip install -r requirements.txt
+  - pipenv install --dev
 
 env:
   global:
@@ -20,4 +19,4 @@ env:
     - SDL_AUDIODRIVER=audio
 
 script:
-  - pytest -v
+  - pipenv run pytest -v
