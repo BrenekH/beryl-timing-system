@@ -1,11 +1,12 @@
 language: python
 os: linux
+dist: xenial
 
 # Because Beryl is going to run on Python 3.6 or later
 python:
   - "3.6"
   - "3.7"
-#  - "3.8"
+  # - "3.8"
 cache: pip
 
 install:

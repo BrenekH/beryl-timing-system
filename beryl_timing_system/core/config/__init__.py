@@ -23,6 +23,7 @@ root:
 
 # Sample scene_registry.json
 {
+	"active_scene": "random",
 	"random" : {
 		"uuid": "random",
 		"name": "Scene 1"
@@ -53,9 +54,9 @@ class SceneManager:
 
 		# Directory management
 		if directory:
-			self.__dir: Path = Path(directory)
+			self.__dir: Path = Path(str(directory))
 		else:
-			self.__dir: Path = Path(getenv('LOCALAPPDATA') / "beryl/data")
+			self.__dir: Path = Path(getenv('LOCALAPPDATA')) / "beryl/data"
 		self.__validate_directory()
 
 		self.__setup_data_dirs()
