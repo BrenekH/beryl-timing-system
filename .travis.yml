@@ -10,8 +10,10 @@ python:
 cache: pip
 
 install:
+  - pip install pipenv
+  - pipenv lock -r > requirements.txt
   - pip install -r requirements.txt
-  - chmod +x travis_setup_env.sh && ./travis_setup_env.sh
+  - pip install .
 
 env:
   global:
