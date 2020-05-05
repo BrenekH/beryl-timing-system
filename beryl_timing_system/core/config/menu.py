@@ -58,8 +58,7 @@ class SettingsMenu:
 		return menu
 
 	def _parse_plugin_type(self, type_string: str) -> Tuple[bool, bool, str]:
-		# (options, password, color input, type to pass(None if options or color))
-		# TODO: Test this function
+		# (options, password, color input, type to pass or extra data)
 		type_string = type_string.strip()
 
 		if type_string.startswith("options"):
@@ -72,8 +71,8 @@ class SettingsMenu:
 				else:
 					options_list.append(option.strip())
 
-			return (False, False, True, options_list)
-		elif type_string == "color":
+			return (True, False, False, options_list)
+		elif type_string.startswith("color"):
 			color_type = type_string.split("<")[1][:-1]
 
 			assert color_type == "rgb" or color_type == "hex", "Color type must be 'rgb' or 'hex'"
