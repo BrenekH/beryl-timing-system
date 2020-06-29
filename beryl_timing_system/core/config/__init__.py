@@ -110,10 +110,9 @@ class SceneManager:
 
 			if loop_counter > 200:
 				print(f"{Fore.RED}Unable to generate new UUID after 200 tries{Fore.RESET}")
-				break
+				return None
+
 			loop_counter += 1
-		
-		return None
 		
 		self._registry[new_uuid] = {"uuid": new_uuid, "name": scene_name}
 
