@@ -1,16 +1,17 @@
 language: python
 os: linux
+dist: xenial
 
 # Because Beryl is going to run on Python 3.6 or later
 python:
   - "3.6"
   - "3.7"
-#  - "3.8"
+  # - "3.8"
 cache: pip
 
 install:
-  - pip install -r requirements.txt
-  - chmod +x travis_setup_env.sh && ./travis_setup_env.sh
+  - pip install pipenv
+  - pipenv install --dev
 
 env:
   global:
@@ -18,4 +19,4 @@ env:
     - SDL_AUDIODRIVER=audio
 
 script:
-  - pytest
+  - pipenv run pytest -v
