@@ -15,7 +15,7 @@ class CoreDisplay:
 		self.display = None
 		self.plugin_display = None
 		self.clock = None
-		
+
 		self.width, self.height = (1280, 720)
 
 		self.timer = None
@@ -69,7 +69,7 @@ class CoreDisplay:
 					self.height = event.h
 					self.width = event.w
 					self.display = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
-					
+
 					if self.do_game_display:
 						self.plugin_display = pygame.Surface((self.width, self.height - 100))
 
@@ -108,7 +108,7 @@ class CoreDisplay:
 	def load_config(self, config_name="default.json"):
 		try:
 			self.config = json.load(open(Path(f"configs/main/{config_name}")))
-		except:
+		except Exception:
 			if Path("configs/main").is_dir():
 				json.dump(self.default_config, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
 			else:

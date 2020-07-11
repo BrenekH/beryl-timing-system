@@ -1,4 +1,3 @@
-import pygame
 from beryl_plugin import PluginBase
 from beryl_plugin.listeners import beryl_plugin, on_key
 
@@ -12,7 +11,7 @@ class Plugin(PluginBase):
 		self.test_mutable = 0
 
 	def stop(self):
-		return None
+		return None, self
 
 	@on_key("a")
 	def test_key_listener(self, key):
@@ -22,3 +21,4 @@ class Plugin(PluginBase):
 	@on_key("*")
 	def test_all_key_listener(self, key):
 		print(f"All keys {key}")
+		return self

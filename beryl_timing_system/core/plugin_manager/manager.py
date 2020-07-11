@@ -26,13 +26,13 @@ class PluginManager:
 
 	def load_plugins(self, plugins: List[str]):
 		"""Loads plugins to be used by the plugin manager
-		
+
 		Arguments:
 			plugins {List[str]} -- List of plugins to load
 		"""
 
 		requested_requirements = []
-		
+
 		for plugin in plugins:
 			# Import the plugin's module
 			plugin_module = import_module(plugin)
@@ -69,7 +69,7 @@ class PluginManager:
 					try:
 						if not func._is_beryl_handler:
 							continue
-					except AttributeError as e:
+					except AttributeError:
 						continue
 
 					# Sort into different types
@@ -147,8 +147,8 @@ class PluginManager:
 	# Configs API
 	def get_current_config(self, child_class):
 		# TODO: Implement
-		return "This feature is not yet implemented"
+		return "This feature is not yet implemented", self
 
 	def get_current_family_config(self, child_class):
 		# TODO: Implement
-		return "This feature is not yet implemented"
+		return "This feature is not yet implemented", self

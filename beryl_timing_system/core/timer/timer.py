@@ -55,7 +55,7 @@ class Timer:
 			if self.sound_enabled:
 				self.early_stop_sound.play()
 		else:
-			# Play the stop sound 
+			# Play the stop sound
 			if self.sound_enabled:
 				self.stop_sound.play()
 
@@ -77,7 +77,7 @@ class Timer:
 					self._period_start_time = time.time()
 					if self.sound_enabled:
 						self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_sound"].play()
-							
+
 			self._seconds_left = self.timing_periods_details[self.timing_periods[self._current_period_index]]["start_time"] - seconds_elapsed
 			return (
 				self.timing_periods[self._current_period_index],
@@ -112,14 +112,14 @@ class Timer:
 		except Exception as e:
 			self.sound_enabled = False
 			print("Disabling sounds because of error: " + str(e))
-		
+
 
 	def load_settings(self, config_file_name="default.json"):
 		# Load the timing periods from the configuration file
 
 		try:
 			json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
-		except:
+		except Exception:
 			if Path("configs/timer").is_dir():
 				json.dump(self.default_config, open(Path(f"configs/timer/{config_file_name}"), "w"), indent=4)
 			else:

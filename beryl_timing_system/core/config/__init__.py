@@ -6,6 +6,7 @@ from random import choice
 from string import ascii_letters
 from typing import List
 
+# TODO: Remove the samples
 """ Data dir setup
 root:
 	scene_registry.json
@@ -27,7 +28,7 @@ root:
 	"random" : {
 		"uuid": "random",
 		"name": "Scene 1"
-	}, 
+	},
 	"otherI" : {
 		"uuid": "otherI",
 		"name": "Scene 2"
@@ -56,7 +57,11 @@ class SceneManager:
 		if directory:
 			self.__dir: Path = Path(str(directory))
 		else:
-			self.__dir: Path = Path(getenv('LOCALAPPDATA')) / "beryl/data"
+			local_app_data = getenv("LOCALAPPDATA")
+			if local_app_data == None:
+				# TODO: Figure out what the default should be if LOCALAPPDATA env var doesn't exist
+				local_app_data = ""
+			self.__dir: Path = Path(local_app_data) / "beryl/data"
 		self.__validate_directory()
 
 		self.__setup_data_dirs()
@@ -85,7 +90,7 @@ class SceneManager:
 
 		if not full_path.is_file() and not full_path.is_dir():
 			return False
-		
+
 		return True
 
 	def __setup_data_dirs(self):
@@ -95,7 +100,7 @@ class SceneManager:
 		self.__validate_directory("plugins")
 
 		# Files
-		if not self.__check_for_file(registry_file_name):
+		if not self.__check_for_file(self.registry_file_name):
 			self.new_scene()
 			self.save_registry()
 
@@ -103,7 +108,7 @@ class SceneManager:
 		loop_counter = 0
 		new_uuid = ""
 		while True:
-			new_uuid = self.__random_uuid()
+			new_uuid = random_uuid()
 
 			if new_uuid not in self._registry:
 				break
@@ -113,23 +118,23 @@ class SceneManager:
 				return None
 
 			loop_counter += 1
-		
+
 		self._registry[new_uuid] = {"uuid": new_uuid, "name": scene_name}
 
 		self.save_scene(new_uuid, {"name": scene_name, "uuid": new_uuid, "layout": "normal", "plugins": []})
 
 		# TODO: Generate blank timer json
 
-	def __random_uuid(self) -> str:
-		"""Generate a random string with the combination of lowercase and uppercase letters"""
-		return "".join(choice(ascii_letters) for _ in range(8))
-
 	def save_registry(self):
-		dump(self._registry, self.__dir / registry_file_name)
+		dump(self._registry, open(self.__dir / self.registry_file_name, "w"))
 
 	def validate_plugin_folders(self, plugin_ids: List[str]):
 		# TODO: Loop through plugin_ids and validate directory on their name and plugins folder
 		pass
 
 	def save_scene(self, scene_uuid, scene_json):
-		dump(scene_json, self.__dir / f"scenes/{scene_uuid}.json")
+		dump(scene_json, open(self.__dir / f"scenes/{scene_uuid}.json", "w"))
+
+def random_uuid() -> str:
+	"""Generate a random string with the combination of lowercase and uppercase letters"""
+	return "".join(choice(ascii_letters) for _ in range(8))

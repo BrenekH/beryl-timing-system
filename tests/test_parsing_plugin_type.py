@@ -1,15 +1,11 @@
 import pygame_menu
-from beryl_timing_system.core.config.menu import SettingsMenu
+from beryl_timing_system.core.config.menu import parse_plugin_type
 from pytest import raises
-from unittest.mock import Mock
 
 # TODO: Expand tests to cover more edge cases
 
-# Setup
-settings_menu = SettingsMenu(Mock())
-
 def parse_string(string: str):
-	return settings_menu._parse_plugin_type(string)
+	return parse_plugin_type(string)
 
 def test_options_type():
 	assert parse_string("options<One, 2, 3.0>") == (True, False, False, ["One", "2", "3.0"])
