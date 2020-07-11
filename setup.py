@@ -6,6 +6,5 @@ setup(name='Beryl Timing System',
       url='http://github.com/zPaw/beryl-timing-system',
       author='Brenek Harrison',
       author_email='brenekharrison@gmail.com',
-      license='GPLv3',
       packages=['beryl_timing_system'],
       zip_safe=False)
