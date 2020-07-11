@@ -2,6 +2,7 @@ import pygame, json
 from pathlib import Path
 from os import mkdir
 from .colors import Color
+from .config.menu import SettingsMenu
 from .timer import Timer
 from .plugin_manager import Event, PluginManager
 
@@ -19,6 +20,8 @@ class CoreDisplay:
 
 		self.timer = None
 		self.manager = None
+
+		self.__settings_menu = None
 
 		self.config = None
 
@@ -42,17 +45,21 @@ class CoreDisplay:
 		if self.do_game_display:
 			self.plugin_display = pygame.Surface((self.width, self.height - 100)) # lgtm [py/call/wrong-arguments]
 
-		self.running = True
-		self.__run__()
+		self.__settings_menu = SettingsMenu(self)
 
-	def __run__(self):
+		self.running = True
+		self.__run()
+
+	def __run(self):
 		while self.running:
 			self.display.fill(Color.white.value)
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					self.running = False
 				elif event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_SPACE:
+					if event.key == pygame.K_ESCAPE:
+						self.__settings_menu.start()
+					elif event.key == pygame.K_SPACE:
 						self.toggle_timer = True
 					try:
 						self.manager.trigger_event(Event.key, chr(event.key))
