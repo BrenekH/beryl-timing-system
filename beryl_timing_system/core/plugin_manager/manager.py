@@ -36,10 +36,10 @@ class PluginManager:
 		for plugin in plugins:
 			# Import the plugin's module
 			plugin_module = import_module(plugin)
-			
+
 			# Find all classes in the plugin's module
 			all_module_classes = [m[1] for m in getmembers(plugin_module, isclass) if m[1].__module__ == plugin_module.__name__]
-			
+
 			# Find all classes marked with the Class._is_beryl_plugin variable set to True
 			beryl_plugin_classes = []
 			for module_class in all_module_classes:
@@ -48,7 +48,7 @@ class PluginManager:
 						continue
 				except AttributeError:
 					continue
-				
+
 				beryl_plugin_classes.append(module_class)
 
 			# Sanity checks
@@ -79,7 +79,7 @@ class PluginManager:
 							print(f"{Fore.RED}[ERROR] Function '{func.__name__}' of '{plugin_id}' has invalid event type '{func._beryl_event}'{Fore.RESET}'")
 
 						self.__add_handler_safely(plugin_id, func)
-						
+
 						if func._beryl_event not in self.__plugin_event_registry:
 							self.__plugin_event_registry[func._beryl_event] = []
 
@@ -110,10 +110,10 @@ class PluginManager:
 
 	def trigger_event(self, event_type, *args):
 		"""Triggers all handlers associated to the passed event type
-		
+
 		Arguments:
 			event_type -- The event type to trigger
-		
+
 		Returns:
 			bool -- True when at least one event handler was called
 		"""
@@ -122,7 +122,7 @@ class PluginManager:
 			self.__plugin_event_registry[event_type]
 		except KeyError:
 			return event_triggered
-		
+
 		for ID in self.__plugin_event_registry[event_type]:
 			for handler_obj in self.__plugins[ID][event_type]:
 				if event_type == Event.key:

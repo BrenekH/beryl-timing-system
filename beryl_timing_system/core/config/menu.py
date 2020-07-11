@@ -102,7 +102,7 @@ def parse_plugin_type(type_string: str) -> Tuple[bool, bool, str]:
 		color_type = type_string.split("<")[1][:-1]
 
 		assert color_type == "rgb" or color_type == "hex", "Color type must be 'rgb' or 'hex'"
-		
+
 		return (False, False, True, color_type)
 	elif type_string == "password":
 		return (False, True, False, pygame_menu.locals.INPUT_TEXT)
@@ -110,5 +110,5 @@ def parse_plugin_type(type_string: str) -> Tuple[bool, bool, str]:
 		return (False, False, False, pygame_menu.locals.INPUT_INT)
 	elif type_string == "float":
 		return (False, False, False, pygame_menu.locals.INPUT_FLOAT)
-	
+
 	return (False, False, False, pygame_menu.locals.INPUT_TEXT)
