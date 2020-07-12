@@ -1,5 +1,5 @@
 import pygame_menu
-from beryl_timing_system.core.config.menu import parse_plugin_type
+from beryl_timing_system.config.menu import parse_plugin_type
 from pytest import raises
 
 # TODO: Expand tests to cover more edge cases
