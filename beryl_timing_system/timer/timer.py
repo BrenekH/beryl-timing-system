@@ -116,6 +116,7 @@ class Timer:
 
 	def load_settings(self, config_file_name="default.json"):
 		# Load the timing periods from the configuration file
+		# TODO: Take from the SceneManager instead of file in cwd
 
 		try:
 			json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))

@@ -3,6 +3,38 @@ from typing import Dict, Tuple
 from ..colors import Color
 
 class SettingsMenu:
+	# This Settings menu is going to be crazy
+	___layout = """
+Main:
+	Display:
+		- Fullscreen toggle (button)
+		- Default resolution (2 numerical entry)
+		- 'Apply' (button)
+	Scenes:
+		- New Scene (button)
+		- All existing scenes (as many buttons as it takes, including scrolling)
+		Scene Menu:
+			- Name (text entry)
+			- Timer (button):
+				- 'Add Timing Period' (button)
+				- All timing periods [in timing order] (many buttons)
+				Timing Period Menu:
+					- Name
+					- Sequence number
+					- Start time [seconds]
+					- Duration [seconds]
+					- Start sound
+						Sound Menu:
+							- Drop down [Not sure how this will be implemented]
+							- Select your own (button)
+			- Plugins (button):
+				- Plugin (button)
+				- All selected plugins (many buttons)
+				Plugin Menu:
+					- Plugin configuration as parsed
+			- 'Delete Scene' (button)
+			- 'Apply' (button)
+"""
 	def __init__(self, parent):
 		self.parent = parent
 

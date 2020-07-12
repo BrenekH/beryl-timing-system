@@ -9,5 +9,5 @@
 
 * Scenes
   * Configurable timing periods
-  * Optional/configurable sounds at start and end of periods
+  * Optional/configurable sounds at start of periods
 * Comprehensible UI

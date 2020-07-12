@@ -117,18 +117,19 @@ class PluginManager:
 		Returns:
 			bool -- True when at least one event handler was called
 		"""
-		event_triggered = False
 		try:
 			self.__plugin_event_registry[event_type]
 		except KeyError:
-			return event_triggered
+			return False	# No event handler was called
 
+		event_triggered = False
 		for ID in self.__plugin_event_registry[event_type]:
 			for handler_obj in self.__plugins[ID][event_type]:
 				if event_type == Event.key:
 					if "*" in handler_obj["keys"] or args[0] in handler_obj["keys"]:
 						handler_obj["func"](self.__plugins[ID]["instance"], *args)
 						event_triggered = True
+				# TODO: Trigger other Event types
 				else:
 					handler_obj["func"](self.__plugins[ID]["instance"], *args)
 					event_triggered = True

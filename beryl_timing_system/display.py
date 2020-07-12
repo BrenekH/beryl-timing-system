@@ -37,12 +37,13 @@ class CoreDisplay:
 
 		self.manager = PluginManager(self)
 
-		self.manager.load_plugins(self.config["active_plugins"])
+		# TODO: Uncomment when ready for plugins
+		# self.manager.load_plugins(self.config["active_plugins"])
 
-		self.do_game_display = self.manager.need_game_display()
+		# self.do_game_display = self.manager.need_game_display()
 
-		if self.do_game_display:
-			self.plugin_display = pygame.Surface((self.width, self.height - 100)) # lgtm [py/call/wrong-arguments]
+		# if self.do_game_display:
+		# 	self.plugin_display = pygame.Surface((self.width, self.height - 100)) # lgtm [py/call/wrong-arguments]
 
 		self.__settings_menu = SettingsMenu(self)
 
@@ -105,6 +106,7 @@ class CoreDisplay:
 		self.display.blit(screen_text, screen_rect)
 
 	def load_config(self, config_name="default.json"):
+		# TODO: Take from the SceneManager instead of file in cwd
 		try:
 			self.config = json.load(open(Path.cwd() / f"configs/main/{config_name}"))
 		except Exception:
