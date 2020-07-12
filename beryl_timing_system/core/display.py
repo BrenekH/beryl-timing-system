@@ -1,6 +1,5 @@
 import pygame, json
 from pathlib import Path
-from os import mkdir
 from .colors import Color
 from .config.menu import SettingsMenu
 from .timer import Timer
@@ -107,11 +106,11 @@ class CoreDisplay:
 
 	def load_config(self, config_name="default.json"):
 		try:
-			self.config = json.load(open(Path(f"configs/main/{config_name}")))
+			self.config = json.load(open(Path.cwd() / f"configs/main/{config_name}"))
 		except Exception:
 			if Path("configs/main").is_dir():
-				json.dump(self.default_config, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
+				json.dump(self.default_config, open(Path.cwd() / f"configs/main/{config_name}", "w"), indent=4)
 			else:
-				mkdir("configs/main")
-				json.dump(self.default_config, open(Path(f"configs/main/{config_name}"), "w"), indent=4)
+				(Path.cwd() / "configs/main").mkdir(parents=True, exist_ok=True)
+				json.dump(self.default_config, open(Path.cwd() / f"configs/main/{config_name}", "w"), indent=4)
 			self.config = json.load(open(Path(f"configs/main/{config_name}")))
