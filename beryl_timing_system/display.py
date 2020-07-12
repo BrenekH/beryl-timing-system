@@ -1,7 +1,7 @@
 import pygame, json
 from pathlib import Path
 from .colors import Color
-from .config.menu import SettingsMenu
+from .menu import SettingsMenu
 from .timer import Timer
 from .plugin_manager import Event, PluginManager
 
@@ -11,16 +11,16 @@ class CoreDisplay:
 		self.do_game_display = False
 		self.toggle_timer = False
 
-		self.display = None
-		self.plugin_display = None
-		self.clock = None
+		self.display: pygame.Surface = None
+		self.plugin_display: pygame.Surface = None
+		self.clock: pygame.time.Clock = None
 
 		self.width, self.height = (1280, 720)
 
-		self.timer = None
-		self.manager = None
+		self.timer: Timer = None
+		self.manager: PluginManager = None
 
-		self.__settings_menu = None
+		self.__settings_menu: SettingsMenu = None
 
 		self.config = None
 
