@@ -6,11 +6,13 @@ from random import choice
 from string import ascii_letters
 from typing import List
 
+from .config_coordinator import ConfigCoordinator
+
 # TODO: Remove the samples
 """ Data dir setup
 root:
 	scene_registry.json
-	display.json
+	display_config.json
 	scenes:
 		random.json
 	timer:
@@ -25,13 +27,13 @@ root:
 # Sample scene_registry.json
 {
 	"active_scene": "random",
-	"random" : {
-		"uuid": "random",
-		"name": "Scene 1"
-	},
-	"otherI" : {
-		"uuid": "otherI",
-		"name": "Scene 2"
+	"scenes": {
+		"random" : {
+			"name": "Scene 1"
+		},
+		"otherI" : {
+			"name": "Scene 2"
+		}
 	}
 }
 

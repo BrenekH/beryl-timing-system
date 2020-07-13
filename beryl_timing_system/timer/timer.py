@@ -118,15 +118,16 @@ class Timer:
 		# Load the timing periods from the configuration file
 		# TODO: Take from the SceneManager instead of file in cwd
 
-		try:
-			json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
-		except Exception:
-			if Path("configs/timer").is_dir():
-				json.dump(self.default_config, open(Path(f"configs/timer/{config_file_name}"), "w"), indent=4)
-			else:
-				mkdir("configs/timer")
-				json.dump(self.default_config, open(Path(f"configs/timer/{config_file_name}"), "w"), indent=4)
-			json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
+		# try:
+		# 	json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
+		# except Exception:
+		# 	if Path("configs/timer").is_dir():
+		# 		json.dump(self.default_config, open(Path(f"configs/timer/{config_file_name}"), "w"), indent=4)
+		# 	else:
+		# 		mkdir("configs/timer")
+		# 		json.dump(self.default_config, open(Path(f"configs/timer/{config_file_name}"), "w"), indent=4)
+		# 	json_file = json.load(open(Path(f"configs/timer/{config_file_name}")))
+		json_file = self.default_config
 
 		for period in json_file["timing_periods"]:
 			self.timing_periods.append(period["name"])

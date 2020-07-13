@@ -1,9 +1,10 @@
 import pygame, json
 from pathlib import Path
 from .colors import Color
+from .config import ConfigCoordinator
 from .menu import SettingsMenu
-from .timer import Timer
 from .plugin_manager import Event, PluginManager
+from .timer import Timer
 
 class CoreDisplay:
 	def __init__(self):
@@ -17,6 +18,8 @@ class CoreDisplay:
 
 		self.width, self.height = (1280, 720)
 
+		self.config_coordinator: ConfigCoordinator = None
+
 		self.timer: Timer = None
 		self.manager: PluginManager = None
 
@@ -29,7 +32,10 @@ class CoreDisplay:
 	def start(self):
 		pygame.init()
 		self.display = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
+		pygame.display.set_caption("Beryl Timing System")
 		self.clock = pygame.time.Clock()
+
+		self.config_coordinator = ConfigCoordinator()
 
 		self.load_config()
 
@@ -106,6 +112,8 @@ class CoreDisplay:
 		self.display.blit(screen_text, screen_rect)
 
 	def load_config(self, config_name="default.json"):
+		self.config = self.default_config
+		return
 		# TODO: Take from the SceneManager instead of file in cwd
 		try:
 			self.config = json.load(open(Path.cwd() / f"configs/main/{config_name}"))
