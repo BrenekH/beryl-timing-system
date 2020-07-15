@@ -1,8 +1,8 @@
 import pygame, pygame_menu
-from typing import Dict, Tuple
 from ..colors import Color
 from .display_menu import DisplayMenu
 from ..plugin_manager import parse_plugin_config_type
+from .scenes_menu import ScenesMenu
 
 class SettingsMenu:
 	# This Settings menu is going to be crazy
@@ -87,25 +87,7 @@ Main:
 						 theme=self.__theme,
 						 onclose=pygame_menu.events.BACK)
 
-	def _create_plugin_menu(self, plugin_name, plugin_type_dict: Dict[str, str]) -> pygame_menu.Menu:
-		menu = self._create_base_menu("Title")
-		return menu
-
 	def _setup_menu(self):
 		self.main_menu.add_button("Display Settings", DisplayMenu(self.parent, self.__theme).generate())
 
-		self.main_menu.add_button("Scenes", self._create_scenes_main_menu())
-
-	def _create_scenes_main_menu(self) -> pygame_menu.Menu:
-		menu = self._create_base_menu("Scenes")
-		# TODO: Add 'New Scene' button
-		# TODO: Add all existing scenes buttons
-		return menu
-
-	def _create_scene_menu(self, uuid=None, new=False) -> pygame_menu.Menu:
-		# TODO: Perform uuid lookup if new is False
-		menu = self._create_base_menu("Random Scene")
-		# TODO: Add 'Timer' menu button
-		# TODO: Add 'Plugins' menu button
-		# TODO: Add 'Layout' selector
-		return menu
+		self.main_menu.add_button("Scenes", ScenesMenu(self.parent, self.__theme).generate())
