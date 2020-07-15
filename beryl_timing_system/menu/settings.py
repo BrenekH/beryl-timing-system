@@ -1,6 +1,7 @@
 import pygame, pygame_menu
 from typing import Dict, Tuple
 from ..colors import Color
+from .display_menu import DisplayMenu
 from ..plugin_manager import parse_plugin_config_type
 
 class SettingsMenu:
@@ -91,16 +92,9 @@ Main:
 		return menu
 
 	def _setup_menu(self):
-		self.main_menu.add_button("Display Settings", self._create_display_settings_menu())
+		self.main_menu.add_button("Display Settings", DisplayMenu(self.parent, self.__theme).generate())
 
 		self.main_menu.add_button("Scenes", self._create_scenes_main_menu())
-
-	def _create_display_settings_menu(self) -> pygame_menu.Menu:
-		menu = self._create_base_menu("Display Settings")
-		# TODO: Add fullscreen toggle
-		# TODO: Add default resolution
-		# TODO: 'Apply' button
-		return menu
 
 	def _create_scenes_main_menu(self) -> pygame_menu.Menu:
 		menu = self._create_base_menu("Scenes")

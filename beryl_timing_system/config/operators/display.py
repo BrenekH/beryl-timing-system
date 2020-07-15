@@ -14,3 +14,16 @@ class DisplayConfigOperator(ConfigOperatorBase):
 		}
 
 		self.data_obj = self.load_json(self.config_file, self.default_display_obj)
+
+		self.fullscreen: bool = self.data_obj["fullscreen"]
+		self.width: int = self.data_obj["resolution"]["width"]
+		self.height: int = self.data_obj["resolution"]["height"]
+
+	def commit(self):
+		"""Commit the current values in memory to the json file
+		"""
+		self.data_obj["fullscreen"] = self.fullscreen
+		self.data_obj["resolution"]["width"] = self.width
+		self.data_obj["resolution"]["height"] = self.height
+
+		self.dump_json(self.config_file, self.data_obj)
