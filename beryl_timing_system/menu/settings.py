@@ -13,12 +13,22 @@ Main:
 		- Default resolution (2 numerical entry)
 		- 'Apply' (button)
 	Scenes:
+		- Set Active Scene (button to menu)
+			- All existing scene names as buttons that set it to active
 		- New Scene (button)
 		- All existing scenes (as many buttons as it takes, including scrolling)
 		Scene Menu:
 			- Name (text entry)
 			- Timer (button):
-				- 'Add Timing Period' (button)
+				- Early Stop Sound (button)
+					Sound Menu:
+						- Drop down [Not sure how this will be implemented]
+						- Select your own (button)
+				- Stop Sound (button)
+					Sound Menu:
+						- Drop down [Not sure how this will be implemented]
+						- Select your own (button)
+				- Idle Period (button)
 				- All timing periods [in timing order] (many buttons)
 				Timing Period Menu:
 					- Name
@@ -29,13 +39,14 @@ Main:
 						Sound Menu:
 							- Drop down [Not sure how this will be implemented]
 							- Select your own (button)
+				- 'Add Timing Period' (button)
 			- Plugins (button):
 				- Plugin (button)
 				- All selected plugins (many buttons)
 				Plugin Menu:
 					- Plugin configuration as parsed
 			- 'Delete Scene' (button)
-			- 'Apply' (button)
+			- 'Save' (button)
 """
 	def __init__(self, parent):
 		self.parent = parent
