@@ -57,3 +57,12 @@ class SceneConfigOperator(ConfigOperatorBase):
 			raise ValueError(f"UUID {uuid} doesn't exist in the scene registry")
 	
 		return self.scenes[uuid]["name"]
+
+	def delete_scene(self, uuid: str, no_commit=False) -> str:
+		if uuid not in self.scenes:
+			raise ValueError(f"UUID {uuid} doesn't exist in the scene registry")
+
+		del self.scenes[uuid]
+
+		if not no_commit:
+			self.commit()

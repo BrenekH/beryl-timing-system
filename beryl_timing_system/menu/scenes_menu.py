@@ -49,16 +49,24 @@ class ScenesMenu:
 
 		menu = self._create_base_menu("Scene Settings")
 		# Add Name text entry
-		menu.add_text_input("Name: ", default=self.parent.config_coordinator.scene_config_operator.get_scene_name(uuid), onchange=self._save_temp_scene_name_func_generator(uuid))
+		menu.add_text_input("Name: ", default=self.parent.config_coordinator.scene_config_operator.get_scene_name(uuid), onchange=self._save_temp_scene_name_factory(uuid))
 		
 		# Add 'Timer' menu button
 		menu.add_button("Timer", self._create_timer_menu(uuid))
 		# TODO: Add 'Plugins' menu button
 		# TODO: Add 'Layout' selector
-		# TODO: Add 'Delete Scene' button
+		# Add 'Delete Scene' button
+		menu.add_button("Delete Scene", self._delete_scene_factory(uuid, menu))
 		# Add 'Save' button
 		menu.add_button("Save", self._save_scene)
 		return menu
+
+	def _delete_scene_factory(self, uuid: str, current_menu: pygame_menu.Menu):
+		def return_fun():
+			self.parent.config_coordinator.scene_config_operator.delete_scene(uuid)
+			self.main_menu.remove_widget(self.main_menu.get_widget(uuid))
+			current_menu._back()
+		return return_fun
 
 	def _save_scene(self):
 		if self._tentative_name_store == None:
@@ -71,10 +79,10 @@ class ScenesMenu:
 
 		self._tentative_name_store = None
 
-	def _save_temp_scene_name_func_generator(self, uuid):
-		def new_func(value):
+	def _save_temp_scene_name_factory(self, uuid):
+		def return_func(value):
 			self._tentative_name_store = (uuid, value)
-		return new_func
+		return return_func
 
 	def _create_timer_menu(self, scene_uuid) -> pygame_menu.Menu:
 		menu = self._create_base_menu("Timer Settings")
