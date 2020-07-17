@@ -35,7 +35,7 @@ class ScenesMenu:
 		for uuid in self.parent.config_coordinator.scene_config_operator.scenes:
 			scene = self.parent.config_coordinator.scene_config_operator.scenes[uuid]
 			self.main_menu.add_button(scene["name"], self._create_scene_menu(uuid), button_id=uuid)
-		
+
 		return self.main_menu
 
 	def _new_scene_on_click(self) -> pygame_menu.Menu:
@@ -65,7 +65,7 @@ class ScenesMenu:
 		def return_fun():
 			self.parent.config_coordinator.scene_config_operator.delete_scene(uuid)
 			self.main_menu.remove_widget(self.main_menu.get_widget(uuid))
-			current_menu._back()
+			current_menu.reset(1)
 		return return_fun
 
 	def _save_scene(self):
