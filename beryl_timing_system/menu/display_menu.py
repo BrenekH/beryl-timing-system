@@ -29,7 +29,7 @@ class DisplayMenu:
 		menu.add_vertical_margin(30)
 
 		# Add default resolution
-		menu.add_label("Default Resolution")
+		menu.add_label("Default Resolution", selectable=False)
 		menu.add_vertical_margin(10)
 		
 		current_value = self.parent.config_coordinator.display_config_operator.width
@@ -44,7 +44,7 @@ class DisplayMenu:
 
 		# 'Apply' button
 		menu.add_button("Save", self.apply_on_click)
-		menu.add_label("Changes will not take effect until the settings menu is closed")
+		menu.add_label("Changes will not take effect until the settings menu is closed", selectable=False)
 
 		self.menu = menu
 		return menu
