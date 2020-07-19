@@ -4,6 +4,9 @@ from typing import Dict
 
 class SceneConfigOperator(ConfigOperatorBase):
 	def __init__(self, root_dir: Path):
+		# Initialize property variables
+		self.__active_scene_id: str = ""
+
 		self._scene_registry_file: Path = root_dir / "scene_registry.json"
 
 		self._scenes_dir: Path = root_dir / "scenes"
@@ -22,8 +25,8 @@ class SceneConfigOperator(ConfigOperatorBase):
 
 		self._scene_registry = self.load_json(self._scene_registry_file, self._default_scene_registry_obj)
 
-		self.active_scene_id = self._scene_registry["active_scene"]
 		self.scenes: Dict[str, Dict[str, str]] = self._scene_registry["scenes"]
+		self.active_scene_id = self._scene_registry["active_scene"]
 
 	def commit(self):
 		self._scene_registry["active_scene"] = self.active_scene_id
@@ -34,7 +37,7 @@ class SceneConfigOperator(ConfigOperatorBase):
 	def new_scene(self, uuid: str):
 		if uuid in self.scenes:
 			raise ValueError(f"UUID {uuid} already exists in the scene registry")
-		
+
 		self.scenes[uuid] = {
 			"name": self._default_scene_name
 		}
@@ -51,11 +54,11 @@ class SceneConfigOperator(ConfigOperatorBase):
 
 		if not no_commit:
 			self.commit()
-	
+
 	def get_scene_name(self, uuid: str) -> str:
 		if uuid not in self.scenes:
 			raise ValueError(f"UUID {uuid} doesn't exist in the scene registry")
-	
+
 		return self.scenes[uuid]["name"]
 
 	def delete_scene(self, uuid: str, no_commit=False) -> str:
@@ -66,3 +69,14 @@ class SceneConfigOperator(ConfigOperatorBase):
 
 		if not no_commit:
 			self.commit()
+
+	@property
+	def active_scene_id(self):
+		return self.__active_scene_id
+
+	@active_scene_id.setter
+	def active_scene_id(self, uuid: str):
+		if uuid not in self.scenes:
+			raise ValueError(f"UUID {uuid} doesn't exist in the scene registry")
+
+		self.__active_scene_id = uuid

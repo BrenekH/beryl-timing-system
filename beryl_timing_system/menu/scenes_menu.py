@@ -27,14 +27,16 @@ class ScenesMenu:
 	def generate(self) -> pygame_menu.Menu:
 		self.main_menu = self._create_base_menu("Scenes")
 		# TODO: Add 'Set Active Scene' menu
+		self.main_menu.add_button("Set Active Scene", self._create_set_active_scene_menu())
+
 		# Add 'New Scene' button
 		self.main_menu.add_button("Create New Scene", self._new_scene_on_click)
 		self.main_menu.add_vertical_margin(20)
 
 		# Add all existing scenes buttons
 		for uuid in self.parent.config_coordinator.scene_config_operator.scenes:
-			scene = self.parent.config_coordinator.scene_config_operator.scenes[uuid]
-			self.main_menu.add_button(scene["name"], self._create_scene_menu(uuid), button_id=uuid)
+			scene_name = self.parent.config_coordinator.scene_config_operator.scenes[uuid]["name"]
+			self.main_menu.add_button(scene_name, self._create_scene_menu(uuid), button_id=uuid)
 
 		return self.main_menu
 
@@ -50,7 +52,7 @@ class ScenesMenu:
 		menu = self._create_base_menu("Scene Settings")
 		# Add Name text entry
 		menu.add_text_input("Name: ", default=self.parent.config_coordinator.scene_config_operator.get_scene_name(uuid), onchange=self._save_temp_scene_name_factory(uuid))
-		
+
 		# Add 'Timer' menu button
 		menu.add_button("Timer", self._create_timer_menu(uuid))
 		# TODO: Add 'Plugins' menu button
@@ -71,7 +73,7 @@ class ScenesMenu:
 	def _save_scene(self):
 		if self._tentative_name_store == None:
 			return
-		
+
 		uuid, value = self._tentative_name_store
 
 		self.parent.config_coordinator.scene_config_operator.set_scene_name(uuid, value)
@@ -83,6 +85,23 @@ class ScenesMenu:
 		def return_func(value):
 			self._tentative_name_store = (uuid, value)
 		return return_func
+
+	def _create_set_active_scene_menu(self):
+		menu = self._create_base_menu("Set Active Scene")
+
+		def set_active_scene_factory(uuid: str):	# This would probably be better as a class method but here is fine
+			def return_func():
+				self.parent.config_coordinator.scene_config_operator.active_scene_id = uuid
+				self.parent.config_coordinator.scene_config_operator.commit()
+				menu.reset(1)
+
+			return return_func
+
+		for uuid in self.parent.config_coordinator.scene_config_operator.scenes:
+			scene_name = self.parent.config_coordinator.scene_config_operator.scenes[uuid]["name"]
+			menu.add_button(scene_name, set_active_scene_factory(uuid), button_id=uuid)
+
+		return menu
 
 	def _create_timer_menu(self, scene_uuid) -> pygame_menu.Menu:
 		menu = self._create_base_menu("Timer Settings")
