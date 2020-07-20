@@ -29,17 +29,17 @@ Main:
 						- Drop down [Not sure how this will be implemented]
 						- Select your own (button)
 				- Idle Period (button)
-				- All timing periods [in timing order] (many buttons)
-				Timing Period Menu:
-					- Name
-					- Sequence number
-					- Start time [seconds]
-					- Duration [seconds]
-					- Start sound
-						Sound Menu:
-							- Drop down [Not sure how this will be implemented]
-							- Select your own (button)
 				- 'Add Timing Period' (button)
+				- All timing periods [in timing order] (many buttons)
+					Timing Period Menu:
+						- Name
+						- Sequence number
+						- Start time [seconds]
+						- Duration [seconds]
+						- Start sound
+							Sound Menu:
+								- Drop down [Not sure how this will be implemented]
+								- Select your own (button)
 			- Plugins (button):
 				- Plugin (button)
 				- All selected plugins (many buttons)

@@ -3,6 +3,8 @@ from random import choice
 from string import ascii_letters
 from typing import Dict
 
+from .timer_menu import TimerMenu
+
 class ScenesMenu:
 	def __init__(self, parent, theme):
 		self.parent = parent
@@ -54,7 +56,7 @@ class ScenesMenu:
 		menu.add_text_input("Name: ", default=self.parent.config_coordinator.scene_config_operator.get_scene_name(uuid), onchange=self._save_temp_scene_name_factory(uuid))
 
 		# Add 'Timer' menu button
-		menu.add_button("Timer", self._create_timer_menu(uuid))
+		menu.add_button("Timer", TimerMenu(uuid, self.parent, self.__theme).generate())
 		# TODO: Add 'Plugins' menu button
 		# TODO: Add 'Layout' selector
 		# Add 'Delete Scene' button
@@ -103,10 +105,6 @@ class ScenesMenu:
 
 		return menu
 
-	def _create_timer_menu(self, scene_uuid) -> pygame_menu.Menu:
-		menu = self._create_base_menu("Timer Settings")
-		return menu
-
 	def _create_plugin_menu(self, plugin_name, plugin_type_dict: Dict[str, str]) -> pygame_menu.Menu:
 		menu = self._create_base_menu(plugin_name)
 		return menu
@@ -150,17 +148,17 @@ Scenes:
 					- Drop down [Not sure how this will be implemented]
 					- Select your own (button)
 			- Idle Period (button)
-			- All timing periods [in timing order] (many buttons)
-			Timing Period Menu:
-				- Name
-				- Sequence number
-				- Start time [seconds]
-				- Duration [seconds]
-				- Start sound
-					Sound Menu:
-						- Drop down [Not sure how this will be implemented]
-						- Select your own (button)
 			- 'Add Timing Period' (button)
+			- All timing periods [in timing order] (many buttons)
+				Timing Period Menu:
+					- Name
+					- Sequence number
+					- Start time [seconds]
+					- Duration [seconds]
+					- Start sound
+						Sound Menu:
+							- Drop down [Not sure how this will be implemented]
+							- Select your own (button)
 		- Plugins (button):
 			- Plugin (button)
 			- All selected plugins (many buttons)
