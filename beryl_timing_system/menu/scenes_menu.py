@@ -1,9 +1,8 @@
 import pygame_menu
-from random import choice
-from string import ascii_letters
 from typing import Dict
 
 from .timer_menu import TimerMenu
+from ..util import random_uuid
 
 class ScenesMenu:
 	def __init__(self, parent, theme):
@@ -125,10 +124,6 @@ class ScenesMenu:
 			loop_counter += 1
 
 		return new_uuid
-
-def random_uuid() -> str:
-	"""Generate a random string with the combination of lowercase and uppercase letters"""
-	return "".join(choice(ascii_letters) for _ in range(16))
 
 """
 Scenes:

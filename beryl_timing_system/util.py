@@ -1,3 +1,5 @@
+from random import choice
+from string import ascii_letters
 from typing import Tuple
 
 def serialize_color(color_tuple: Tuple[int, int, int]) -> str:
@@ -23,3 +25,7 @@ def parse_color(color_str: str) -> Tuple[int, int, int]:
 	"""
 	r, g, b = color_str.replace("rgb(", "").replace(")", "").replace(" ", "").split(",")
 	return (int(r), int(g), int(b))
+
+def random_uuid(length=16) -> str:
+	"""Generate a random string with the combination of lowercase and uppercase letters"""
+	return "".join(choice(ascii_letters) for _ in range(length))

@@ -1,7 +1,5 @@
 import pygame_menu
 
-from .scenes_menu import random_uuid
-
 class TimerMenu:
 	def __init__(self, uuid, parent, theme):
 		self.uuid = uuid

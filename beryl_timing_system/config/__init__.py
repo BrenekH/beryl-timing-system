@@ -2,11 +2,10 @@ from colorama import Fore
 from json import dump
 from os import getenv
 from pathlib import Path
-from random import choice
-from string import ascii_letters
 from typing import List
 
 from .config_coordinator import ConfigCoordinator
+from ..util import random_uuid
 
 # TODO: Remove the samples
 """ Data dir setup
@@ -110,7 +109,7 @@ class SceneManager:
 		loop_counter = 0
 		new_uuid = ""
 		while True:
-			new_uuid = random_uuid()
+			new_uuid = random_uuid(length=8)
 
 			if new_uuid not in self._registry:
 				break
@@ -136,7 +135,3 @@ class SceneManager:
 
 	def save_scene(self, scene_uuid, scene_json):
 		dump(scene_json, open(self.__dir / f"scenes/{scene_uuid}.json", "w"))
-
-def random_uuid() -> str:
-	"""Generate a random string with the combination of lowercase and uppercase letters"""
-	return "".join(choice(ascii_letters) for _ in range(8))
