@@ -10,7 +10,7 @@ beryl-plugin = "*"
 beryl-timing-system = {editable = true,path = "."}
 
 [packages]
-pygame = "~=1.9"
+pygame = "*"
 semver = "*"
 pygame-menu = "~=3.0"
 requests = "*"
